@@ -51,6 +51,7 @@ namespace MyShop
                 app.UseExceptionHandler("/Error");
             }
 
+            app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 

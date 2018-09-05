@@ -2,7 +2,6 @@ c:\users\hbox029\Source\Repos\MyShop\MyShop\bin\Debug\netcoreapp2.1\MyShop.deps.
 c:\users\hbox029\Source\Repos\MyShop\MyShop\bin\Debug\netcoreapp2.1\MyShop.runtimeconfig.json
 c:\users\hbox029\Source\Repos\MyShop\MyShop\bin\Debug\netcoreapp2.1\MyShop.runtimeconfig.dev.json
 c:\users\hbox029\Source\Repos\MyShop\MyShop\bin\Debug\netcoreapp2.1\MyShop.dll
-c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.csprojAssemblyReference.cache
 c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.csproj.CoreCompileInputs.cache
 c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.RazorAssemblyInfo.cache
 c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.RazorAssemblyInfo.cs
@@ -30,3 +29,4 @@ c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.Views
 c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.dll
 c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.pdb
 c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.csproj.CopyComplete
+C:\Users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.csprojAssemblyReference.cache
