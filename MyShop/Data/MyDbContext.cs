@@ -14,6 +14,12 @@ namespace MyShop.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+        }
+
         public DbSet<Product> Products { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace MyShop
                 try
                 {
                     var context = services.GetRequiredService<MyDbContext>();
-                    //DbInitializer.Initialize(context);
+                    DbInitializer.Initialize(context);
                     context.Database.EnsureCreated();
                 }
                 catch (Exception ex)
