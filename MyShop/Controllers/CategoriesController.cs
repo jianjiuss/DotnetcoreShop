@@ -20,10 +20,17 @@ namespace MyShop.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public ActionResult GetAll()
+        [HttpGet("childs/{id?}")]
+        public async Task<ActionResult> GetAll(int? id)
         {
-            return Json(_context.Categories.ToList());
+            if(id.HasValue)
+            {
+                return Json(await _context.Categories.Where(c => c.ParentId == id).ToListAsync());
+            }
+            else
+            {
+                return Json(await _context.Categories.Where(c => c.ParentId == null).ToListAsync());
+            }
         }
     }
 }
