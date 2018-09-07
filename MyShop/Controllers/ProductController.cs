@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MyShop.Data;
 using MyShop.Models;
 using System;
@@ -10,7 +11,7 @@ namespace MyShop.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductController : Controller
     {
         private readonly MyDbContext _context;
 
@@ -23,6 +24,12 @@ namespace MyShop.Controllers
         public ActionResult<List<Product>> GetAll()
         {
             return _context.Products.ToList();
+        }
+
+        [HttpGet("category/{categoryId}")]
+        public async Task<ActionResult> Get(int categoryId)
+        {
+            return Json(await _context.Products.Where(p => p.CategoryId == categoryId).ToListAsync());
         }
     }
 }

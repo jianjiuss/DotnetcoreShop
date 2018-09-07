@@ -7,10 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <!--js-->
-    <script src="js/mui.min.js"></script>
-    <script src="js/vue.min.js"></script>
-    <script src="js/vue-resource_1.5.1_vue-resource.min.js"></script>
     <!--标准mui.css-->
     <link rel="stylesheet" href="css/mui.min.css">
     <link rel="stylesheet" type="text/css" href="css/icons-extra.css" />
@@ -116,6 +112,10 @@
 
         </div>
     </div>
+    <!--js-->
+    <script src="js/mui.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/vue-resource_1.5.1_vue-resource.min.js"></script>
     <script>
         window.onload = function () {
             var vm = new Vue({
@@ -128,12 +128,16 @@
                 },
                 methods: {
                     getChilds: function (id) {
-                        //发送get请求
-                        this.$http.get('/api/categories/childs/'+ id).then(function (res) {
-                            this.childCategories = res.body;
-                        }, function () {
-                            console.log('请求失败处理');
-                        });
+                        if (id == -1) {
+                            window.location.href = "/shoplist.html";
+                        }
+                        else {
+                            this.$http.get('/api/categories/childs/' + id).then(function (res) {
+                                this.childCategories = res.body;
+                            }, function () {
+                                console.log('请求失败处理');
+                            });
+                        }
                     },
                     toShopList: function (id) {
                         window.location.href = "/shoplist.html?id=" + id;
@@ -141,7 +145,7 @@
                 },
                 created: function () {
                     this.$http.get('/api/categories/childs').then(function (res) {
-                        res.body.splice(0, 0, {id : -1, name : "全部"});
+                        res.body.splice(0, 0, { id: -1, name: "全部" });
                         this.topCategories = res.body;
                     }, function () {
                         console.log('请求失败');
