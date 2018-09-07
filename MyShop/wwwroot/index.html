@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--js-->
+    <script src="js/mui.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/vue-resource_1.5.1_vue-resource.min.js"></script>
     <!--标准mui.css-->
     <link rel="stylesheet" href="css/mui.min.css">
     <link rel="stylesheet" type="text/css" href="css/icons-extra.css" />
@@ -98,37 +102,28 @@
     <div class="mui-content mui-row mui-fullscreen" id="categories">
         <div class="mui-col-xs-3">
             <div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
-                <a class="mui-control-item" href="#" v-for="item in topCategories" v-on:click="getChilds(item.id)">{{item.name}}</a>
+                <a class="mui-control-item" href="#" v-for="item in topCategories" v-on:click="getChilds(item.id)" v-text="item.name"></a>
             </div>
         </div>
         <div id="segmentedControlContents" class="mui-col-xs-9" style="border-left: 1px solid #c8c7cc;">
 
             <div class="mui-control-content mui-active">
                 <ul class="mui-table-view">
-                    <li class="mui-table-view-cell" v-for="item in childCategories" :key="item.id">{{item.name}}</li>
+                    <li class="mui-table-view-cell" v-for="item in childCategories" :key="item.id" v-text="item.name" v-on:click="toShopList(item.id)">
+                    </li>
                 </ul>
             </div>
 
         </div>
     </div>
-    <script src="js/mui.min.js"></script>
-    <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
-    <script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.min.js"></script>
     <script>
         window.onload = function () {
             var vm = new Vue({
                 el: '#categories',
                 data: {
                     topCategories: [
-                        { id: 0, name: "全部" },
-                        { id: 4, name: "饮料" },
-                        { id: 5, name: "零食" },
-                        { id: 6, name: "其它" }
                     ],
                     childCategories: [
-                        { id: 0, name: "碳酸饮料" },
-                        { id: 1, name: "茶饮料" },
-                        { id: 2, name: "咖啡" }
                     ]
                 },
                 methods: {
@@ -139,7 +134,18 @@
                         }, function () {
                             console.log('请求失败处理');
                         });
+                    },
+                    toShopList: function (id) {
+                        window.location.href = "/shoplist.html?id=" + id;
                     }
+                },
+                created: function () {
+                    this.$http.get('/api/categories/childs').then(function (res) {
+                        res.body.splice(0, 0, {id : -1, name : "全部"});
+                        this.topCategories = res.body;
+                    }, function () {
+                        console.log('请求失败');
+                    });
                 }
             });
         }

@@ -36,6 +36,13 @@ namespace MyShop.Data
             categories[8].ChildCategorys = categories.GetRange(9, 3);
             context.Categories.AddRange(categories);
             context.SaveChanges();
+
+            List<Product> products = new List<Product>()
+            {
+                new Product(){ Name="可乐", Price = 2.5, IconImageUrl = "/images/shopListIcon/cocacola.png", Category = categories[1]},
+                new Product(){ Name="雪碧", Price = 3, IconImageUrl = "/images/shopListIcon/sprite.png", Category = categories[1]},
+                new Product(){ Name="芬达", Price = 3, IconImageUrl = "/images/shopListIcon/fanda.png", Category = categories[1]},
+            };
         }
     }
 }

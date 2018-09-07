@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <head>
+        <meta charset="utf-8">
+        <title>Hello MUI</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <script src="../js/mui.min.js"></script>
+        <!--标准mui.css-->
+        <link rel="stylesheet" href="../css/mui.min.css">
+        <!--App自定义的css-->
+        <link rel="stylesheet" type="text/css" href="../css/app.css" />
+        <style>
+            .title {
+                margin: 20px 15px 10px;
+                color: #6d6d72;
+                font-size: 15px;
+            }
+        </style>
+    </head>
+</head>
+<body>
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="index.html"></a>
+        <h1 class="mui-title">商品列表</h1>
+    </header>
+    <div class="mui-content">
+        <ul class="mui-table-view mui-table-view-chevron">
+            <li class="mui-table-view-cell mui-media">
+                <a class="mui-navigate-right">
+                    <img class="mui-media-object mui-pull-left" src="/images/shopListIcon/cocacola.png">
+                    <div class="mui-media-body">
+                        可乐
+                        <p class='mui-ellipsis'>￥2.50</p>
+                    </div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media">
+                <a class='mui-navigate-right' href="javascript:;">
+                    <img class="mui-media-object mui-pull-left" src="/images/shopListIcon/sprite.png">
+                    <div class="mui-media-body">
+                        雪碧
+                        <p class='mui-ellipsis'>￥3.00</p>
+                    </div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media">
+                <a class="mui-navigate-right">
+                    <img class="mui-media-object mui-pull-left" src="/images/shopListIcon/fanda.png">
+                    <div class="mui-media-body">
+                        芬达
+                        <p class='mui-ellipsis'>￥3.00</p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        window.onload = function () {
+        }
+
+        function getQueryVariable(variable) {
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == variable) { return pair[1]; }
+            }
+            return (false);
+        }
+    </script>
+</body>
+</html>
