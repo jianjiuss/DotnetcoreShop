@@ -20,5 +20,11 @@ namespace MyShop.Models
 
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
+
+        public ICollection<ProductDescription> Descriptions { get; set; }
+        
+        public ICollection<ProductTitleImage> TitleImages { get; set; }
+        
+        public ICollection<ProductInfoImage> InfoImages { get; set; }
     }
 }

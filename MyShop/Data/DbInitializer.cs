@@ -37,6 +37,18 @@ namespace MyShop.Data
             context.Categories.AddRange(categories);
             context.SaveChanges();
 
+            List<Image> images = new List<Image>()
+            {
+                new Image(){ImageUrl = "/images/productTitle/cocacola_title.jpg"},
+                new Image(){ImageUrl = "/images/productImageInfo/testImageInfo.png"},
+                new Image(){ImageUrl = "/images/productImageInfo/testImageInfo.png"},
+                new Image(){ImageUrl = "/images/productImageInfo/testImageInfo.png"},
+                new Image(){ImageUrl = "/images/productImageInfo/testImageInfo.png"}
+            };
+            context.Images.AddRange(images);
+            context.SaveChanges();
+
+
             List<Product> products = new List<Product>()
             {
                 new Product(){ Name="可乐", Price = 2.5, IconImageUrl = "/images/shopListIcon/cocacola.png", Category = categories[1]},
@@ -51,6 +63,26 @@ namespace MyShop.Data
                 new Product(){Name ="扫把", Price = 10, IconImageUrl = "/images/shopListIcon/saoba.png", Category = categories[9]},
                 new Product(){Name ="原子笔", Price = 2, IconImageUrl = "/images/shopListIcon/yuanzibi.png", Category = categories[10]},
                 new Product(){Name ="飘柔", Price = 15, IconImageUrl = "/images/shopListIcon/piaorou.png", Category = categories[11]}
+            };
+
+            products[0].Descriptions = new List<ProductDescription>()
+            {
+                new ProductDescription(){Title = "容量", Content = "150ML"},
+                new ProductDescription(){Title = "能量", Content = "100千焦"},
+                new ProductDescription(){Title = "纳", Content = "16毫克"}
+            };
+
+            products[0].TitleImages = new List<ProductTitleImage>
+            {
+                new ProductTitleImage(){Product = products[0], Image = images[0]}
+            };
+
+            products[0].InfoImages = new List<ProductInfoImage>
+            {
+                new ProductInfoImage(){Product = products[0], Image = images[1]},
+                new ProductInfoImage(){Product = products[0], Image = images[2]},
+                new ProductInfoImage(){Product = products[0], Image = images[3]},
+                new ProductInfoImage(){Product = products[0], Image = images[4]}
             };
 
             context.Products.AddRange(products);

@@ -27,9 +27,21 @@ namespace MyShop.Controllers
         }
 
         [HttpGet("category/{categoryId}")]
-        public async Task<ActionResult> Get(int categoryId)
+        public async Task<ActionResult> GetByCategory(int categoryId)
         {
             return Json(await _context.Products.Where(p => p.CategoryId == categoryId).ToListAsync());
+        }
+
+        [HttpGet("{productId}")]
+        public async Task<ActionResult> Get(int productId)
+        {
+            var product = await _context.Products
+                .Include(p => p.Descriptions)
+                .Include(p => p.InfoImages)
+                .Include(p => p.TitleImages)
+                .FirstOrDefaultAsync(p => p.Id == productId);
+
+            return Json(product);
         }
     }
 }

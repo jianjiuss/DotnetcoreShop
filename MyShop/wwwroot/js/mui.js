@@ -5151,7 +5151,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 	$.ready(function() {
 		//		setTimeout(function() {
-		$('.mui-slider').slider();
+		//$('.mui-slider').slider();
 		$('.mui-scroll-wrapper.mui-slider-indicator.mui-segmented-control').scroll({
 			scrollY: false,
 			scrollX: true,
