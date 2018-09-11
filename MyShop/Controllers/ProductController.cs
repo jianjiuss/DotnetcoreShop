@@ -37,8 +37,8 @@ namespace MyShop.Controllers
         {
             var product = await _context.Products
                 .Include(p => p.Descriptions)
-                .Include(p => p.InfoImages)
-                .Include(p => p.TitleImages)
+                .Include(p => p.InfoImages).ThenInclude(i => i.Image)
+                .Include(p => p.TitleImages).ThenInclude(i => i.Image)
                 .FirstOrDefaultAsync(p => p.Id == productId);
 
             return Json(product);

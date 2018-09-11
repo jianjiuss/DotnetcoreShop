@@ -16,6 +16,8 @@ namespace MyShop.Models
 
         public string IconImageUrl { get; set; }
 
+        public int Store { get; set; }
+
         public int CategoryId { get; set; }
 
         [ForeignKey("CategoryId")]

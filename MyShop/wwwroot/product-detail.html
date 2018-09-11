@@ -63,27 +63,29 @@
     <div id="content">
         <div id="slider" class="mui-slider">
             <div class="mui-slider-group mui-slider-loop">
-                <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
-                <div class="mui-slider-item mui-slider-item-duplicate">
-                    <a href="#">
-                        <img v-bind:src="product.titleImages[product.titleImages.length - 1].imageUrl">
-                    </a>
-                </div>
-
-                <template v-for="titleImage in product.titleImages">
-                    <div class="mui-slider-item">
+                <template v-if="product.titleImages != null && product.titleImages.length > 0">
+                    <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+                    <div class="mui-slider-item mui-slider-item-duplicate">
                         <a href="#">
-                            <img v-bind:src="titleImage.imageUrl">
+                            <img v-bind:src="product.titleImages[product.titleImages.length - 1].image.imageUrl">
+                        </a>
+                    </div>
+
+                    <template v-for="titleImage in product.titleImages">
+                        <div class="mui-slider-item">
+                            <a href="#">
+                                <img v-bind:src="titleImage.image.imageUrl">
+                            </a>
+                        </div>
+                    </template>
+
+                    <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+                    <div class="mui-slider-item mui-slider-item-duplicate">
+                        <a href="#">
+                            <img v-bind:src="product.titleImages[0].image.imageUrl">
                         </a>
                     </div>
                 </template>
-
-                <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
-                <div class="mui-slider-item mui-slider-item-duplicate">
-                    <a href="#">
-                        <img v-bind:src="product.titleImages[0].imageUrl">
-                    </a>
-                </div>
             </div>
             <div class="mui-slider-indicator">
 
@@ -115,7 +117,7 @@
         <div class="tab-container">
             <!--<h6 class="del  ">图文详情</h6>-->
             <div class="med-detail img-detail mui-control-content" id="imgDetail">
-                <img src="images/yuantiao.jpg" style="width:100%;" v-for="infoImage in product.infoImages"/>
+                <img style="width:100%;" v-for="infoImage in product.infoImages" v-bind:src="infoImage.image.imageUrl"/>
             </div>
             <!-- <h6 class="del  ">基本信息</h6>-->
             <div class="med-detail  mui-active mui-control-content med-detail1" id="medDetail">
@@ -172,29 +174,22 @@
                 el: '#content',
                 data: {
                     product: {
-                        name: "可口可乐",
-                        price: "2.50",
-                        store: "15",
-                        descriptions: [
-                            { title: "容量", content: "150ML" },
-                            { title: "能量", content: "100千焦" },
-                            { title: "纳", content: "16毫克"}
-                        ],
-                        titleImages: [
-                            { imageUrl: "images/productTitle/cocacola_title.jpg" }
-                            //{ imageUrl: "images/yuantiao.jpg" },
-                            //{ imageUrl: "images/cbd.jpg" },
-                            //{ imageUrl: "images/shuijiao.jpg" }
-                        ],
-                        infoImages: [
-                            { imageUrl: "images/productImageInfo/testImageInfo.png" },
-                            { imageUrl: "images/productImageInfo/testImageInfo.png" },
-                            { imageUrl: "images/productImageInfo/testImageInfo.png" },
-                            { imageUrl: "images/productImageInfo/testImageInfo.png" }
-                        ]
+                        
                     }
                 },
                 methods: {
+                },
+                created: function () {
+                    var id = getQueryVariable("productId");
+                    this.$http.get("/api/product/" + id).then(function (res) {
+                        this.product = res.body;
+                    }, function () { console.log('请求失败'); })
+                },
+                updated: function () {
+                    var slider = mui(".mui-slider");
+                    slider.slider({
+                        interval: 2000 //自动轮播周期，若为0则不自动播放，默认为0；
+                    });
                 },
                 mounted: function () {
                     var slider = mui(".mui-slider");
