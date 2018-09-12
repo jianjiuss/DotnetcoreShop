@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Hello MUI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" type="text/css" href="css/icons-extra.css" />
+    <!--App自定义的css-->
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+
+    <style>
+        .mui-btn, button, input[type=button], input[type=reset], input[type=submit] {
+            border-radius: 0;
+            border: 0px solid #ccc;
+        }
+
+        .detail {
+            padding: 0 10px;
+            display: flex;
+            justify-content: flex-start;
+            flex-direction: column;
+            background-color: #fff;
+        }
+
+        .detail-money .money-left, .detail-quantity {
+            font-weight: bold;
+            color: #00afc5;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f9f9f9;
+        }
+
+        h4 {
+            font-weight: normal;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .detail-quantity .quantity-left {
+            font-size: 14px;
+            padding: 0px;
+            color: black;
+        }
+
+        .title {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .content {
+            color: #000;
+            text-indent: 2em;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div id="slider" class="mui-slider">
+            <div class="mui-slider-group mui-slider-loop">
+                <template v-if="product.titleImages != null && product.titleImages.length > 0">
+                    <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+                    <div class="mui-slider-item mui-slider-item-duplicate">
+                        <a href="#">
+                            <img v-bind:src="product.titleImages[product.titleImages.length - 1].image.imageUrl">
+                        </a>
+                    </div>
+
+                    <template v-for="titleImage in product.titleImages">
+                        <div class="mui-slider-item">
+                            <a href="#">
+                                <img v-bind:src="titleImage.image.imageUrl">
+                            </a>
+                        </div>
+                    </template>
+
+                    <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+                    <div class="mui-slider-item mui-slider-item-duplicate">
+                        <a href="#">
+                            <img v-bind:src="product.titleImages[0].image.imageUrl">
+                        </a>
+                    </div>
+                </template>
+            </div>
+            <div class="mui-slider-indicator">
+
+                <template v-for="(item, index) in product.titleImages">
+                    <div class="mui-indicator mui-active" v-if="index == 0"></div>
+                    <div class="mui-indicator" v-if="index != 0"></div>
+                </template>
+
+            </div>
+        </div>
+
+        <div class="detail">
+            <h4>{{product.name}}</h4>
+            <div class="detail-money" id="m-rx">
+                <div class="money-left" id="m-price">￥{{product.price}}</div>
+            </div>
+            <div class="detail-quantity">
+                <div class="quantity-left">库存{{product.store}}</div>
+            </div>
+        </div>
+
+        <div style="padding:5px 10px; background-color:#fff;">
+            <div id="segmentedControl"
+                 class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
+                <a class="mui-control-item  mui-active" href="#medDetail">商品详情</a>
+                <a class="mui-control-item" href="#imgDetail">图文详情</a>
+            </div>
+        </div>
+        <div class="tab-container">
+            <!--<h6 class="del  ">图文详情</h6>-->
+            <div class="med-detail img-detail mui-control-content" id="imgDetail">
+                <img style="width:100%;" v-for="infoImage in product.infoImages" v-bind:src="infoImage.image.imageUrl"/>
+            </div>
+            <!-- <h6 class="del  ">基本信息</h6>-->
+            <div class="med-detail  mui-active mui-control-content med-detail1" id="medDetail">
+
+                <template v-for="description in product.descriptions">
+                    <div class="detail-content">
+                        <p class="title">-{{description.title}}</p>
+                        <p class="content">-{{description.content}}</p>
+                    </div>
+                </template>
+
+            </div>
+
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
+        <!--底部的工具条开始-->
+        <nav class="mui-bar mui-bar-tab" style="font-size: 0; padding: 0px; margin: 0px;">
+            <button type="button" class="mui-btn" style="width:15%; top:0px;">
+                <span class="mui-icon-extra mui-icon-extra-heart-filled" style="font-size:25px;"></span><br />
+                <span style="font-size:12px;">收藏</span>
+            </button>
+            <button type="button" class="mui-btn" style="width:15%; top:0px;">
+                <span class="mui-icon-extra mui-icon-extra-cart" style="font-size:25px;"></span><br />
+                <span style="font-size: 12px;">购物车</span>
+            </button>
+            <button type="button" class="mui-btn" style="background-color: #f68c03; color:#fff;font-size: 25px; width:35%;height: 100%; top:0px;">
+                <span class="iconfont icon-kanjiax" style="font-size: 20px;"></span>
+                <span style="font-size: 16px;">加入购物车</span>
+            </button>
+            <button type="button" class="mui-btn" style="background-color:#ff651b;color:#fff;font-size: 25px;width:35%;height: 100%;  top:0px;" v-on:click="changeProduct()">
+                <span class="iconfont icon-dianhua1" style="font-size: 20px;"></span>
+                <span style="font-size: 16px;">立即购买</span>
+            </button>
+        </nav>
+        <!--底部的工具条结束-->
+    </div>
+</body>
+    <script src="js/mui.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/vue-resource_1.5.1_vue-resource.min.js"></script>
+    <script src="js/common.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+
+            var vm = new Vue({
+                el: '#content',
+                data: {
+                    product: {
+                        
+                    }
+                },
+                methods: {
+                },
+                created: function () {
+                    var id = getQueryVariable("productId");
+                    this.$http.get("/api/product/" + id).then(function (res) {
+                        this.product = res.body;
+                    }, function () { console.log('请求失败'); })
+                },
+                updated: function () {
+                    var slider = mui(".mui-slider");
+                    slider.slider({
+                        interval: 2000 //自动轮播周期，若为0则不自动播放，默认为0；
+                    });
+                },
+                mounted: function () {
+                    var slider = mui(".mui-slider");
+                    slider.slider({
+                        interval: 2000 //自动轮播周期，若为0则不自动播放，默认为0；
+                    });
+                }
+            });
+        }
+    </script>
+
+</html >

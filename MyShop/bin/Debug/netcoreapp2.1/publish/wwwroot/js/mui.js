@@ -5151,7 +5151,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 	};
 	$.ready(function() {
 		//		setTimeout(function() {
-		$('.mui-slider').slider();
+		//$('.mui-slider').slider();
 		$('.mui-scroll-wrapper.mui-slider-indicator.mui-segmented-control').scroll({
 			scrollY: false,
 			scrollX: true,
@@ -7160,10 +7160,10 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 			var input = cell.querySelector('input[type=checkbox]');
 			if (input) {
 				//				input.click();
-				if (!input.disabled && !input.readOnly) {
-					input.checked = !input.checked;
-					$.trigger(input, 'change');
-				}
+				//if (!input.disabled && !input.readOnly) {
+				//	input.checked = !input.checked;
+				//	$.trigger(input, 'change');
+				//}
 			}
 		}
 	};
