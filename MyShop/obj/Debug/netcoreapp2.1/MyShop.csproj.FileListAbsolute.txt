@@ -30,3 +30,4 @@ c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.dll
 c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.pdb
 c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.csproj.CopyComplete
 C:\Users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.csprojAssemblyReference.cache
+C:\Users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\Razor\Pages\Login.g.cshtml.cs

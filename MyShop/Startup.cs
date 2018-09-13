@@ -32,6 +32,13 @@ namespace MyShop
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".AspNetCore.Session";
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -53,8 +60,8 @@ namespace MyShop
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
-
+            //app.UseCookiePolicy();
+            app.UseSession();
             app.UseMvc();
         }
     }
