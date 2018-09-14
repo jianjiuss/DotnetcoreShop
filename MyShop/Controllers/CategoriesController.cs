@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyShop.Data;
 using MyShop.Models;
@@ -19,6 +20,7 @@ namespace MyShop.Controllers
         {
             _context = context;
         }
+
 
         [HttpGet("childs/{id?}")]
         public async Task<ActionResult> GetAll(int? id)

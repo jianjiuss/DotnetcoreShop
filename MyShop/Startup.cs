@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -32,18 +34,30 @@ namespace MyShop
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDistributedMemoryCache();
+            services.AddIdentity<IdentityUser, IdentityRole>(options => {
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            }).AddEntityFrameworkStores<MyDbContext>();
 
-            services.AddSession(options =>
-            {
-                options.Cookie.Name = ".AspNetCore.Session";
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            services.ConfigureApplicationCookie(options => {
+                options.LoginPath = "/user/login";
+                options.AccessDeniedPath = "/user/login";
+                options.ReturnUrlParameter = "/index.html";
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<MyDbContext>(options =>
                     options.UseMySql(Configuration.GetConnectionString("MyDbContext")));
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressConsumesConstraintForFormFileParameters = true;
+                options.SuppressInferBindingSourcesForParameters = true;
+                options.SuppressModelStateInvalidFilter = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,8 +74,8 @@ namespace MyShop
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseAuthentication();
             //app.UseCookiePolicy();
-            app.UseSession();
             app.UseMvc();
         }
     }

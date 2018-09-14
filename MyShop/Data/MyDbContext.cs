@@ -4,10 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace MyShop.Data
 {
-    public class MyDbContext : DbContext
+    public class MyDbContext : IdentityDbContext
     {
         public MyDbContext(DbContextOptions<MyDbContext> options)
             : base(options)
@@ -16,6 +18,8 @@ namespace MyShop.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Product>().ToTable("Product");
             modelBuilder.Entity<Category>().ToTable("Category");
             modelBuilder.Entity<Image>().ToTable("Image");

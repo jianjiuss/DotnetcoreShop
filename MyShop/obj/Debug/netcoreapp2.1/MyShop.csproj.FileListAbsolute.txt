@@ -10,16 +10,6 @@ c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.Assem
 c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.TagHelpers.input.cache
 c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.TagHelpers.output.cache
 c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.RazorCoreGenerate.cache
-c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\Razor\Pages\About.g.cshtml.cs
-c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\Razor\Pages\Contact.g.cshtml.cs
-c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\Razor\Pages\Error.g.cshtml.cs
-c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\Razor\Pages\Index.g.cshtml.cs
-c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\Razor\Pages\Privacy.g.cshtml.cs
-c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\Razor\Pages\Shared\_CookieConsentPartial.g.cshtml.cs
-c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\Razor\Pages\Shared\_Layout.g.cshtml.cs
-c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\Razor\Pages\Shared\_ValidationScriptsPartial.g.cshtml.cs
-c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\Razor\Pages\_ViewImports.g.cshtml.cs
-c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\Razor\Pages\_ViewStart.g.cshtml.cs
 c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.RazorTargetAssemblyInfo.cache
 c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.RazorTargetAssemblyInfo.cs
 c:\users\hbox029\Source\Repos\MyShop\MyShop\bin\Debug\netcoreapp2.1\MyShop.pdb
@@ -30,4 +20,6 @@ c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.dll
 c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.pdb
 c:\users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.csproj.CopyComplete
 C:\Users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\MyShop.csprojAssemblyReference.cache
-C:\Users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\Razor\Pages\Login.g.cshtml.cs
+C:\Users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\Razor\Views\User\Index.g.cshtml.cs
+C:\Users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\Razor\Views\User\Login.g.cshtml.cs
+C:\Users\hbox029\Source\Repos\MyShop\MyShop\obj\Debug\netcoreapp2.1\Razor\Views\User\Create.g.cshtml.cs
