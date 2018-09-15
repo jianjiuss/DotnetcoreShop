@@ -65,14 +65,14 @@
             var id = getQueryVariable("id");
             if (id) {
                 Vue.http.get('/api/product/category/' + id).then(function (res) {
-                    this.products = res.body;
+                    vm.products = res.body;
                 }, function () {
                     console.log('请求失败');
                 });
             }
             else {
                 Vue.http.get('/api/product').then(function (res) {
-                    this.products = res.body;
+                    vm.products = res.body;
                 }, function () {
                     console.log('请求失败');
                 });

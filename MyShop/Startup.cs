@@ -42,8 +42,8 @@ namespace MyShop
             }).AddEntityFrameworkStores<MyDbContext>();
 
             services.ConfigureApplicationCookie(options => {
-                options.LoginPath = "/user/login";
-                options.AccessDeniedPath = "/user/login";
+                options.LoginPath = "/login.html";
+                options.AccessDeniedPath = "/login.html";
                 options.ReturnUrlParameter = "/index.html";
             });
 

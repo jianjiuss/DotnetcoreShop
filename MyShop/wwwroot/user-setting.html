@@ -122,7 +122,7 @@
                 location.href = this.getAttribute('href');
             });
 
-            var Vm = new Vue({
+            var vm = new Vue({
                 el: '#content',
                 data: {
                     user: null,
@@ -142,13 +142,13 @@
             });
 
             Vue.http.get("/api/user").then(function (res) {
-                Vm.user = res.body;
-                Vm.isLoading = false;
+                vm.user = res.body;
+                vm.isLoading = false;
             }, function (res) {
                 if (res.status == 401) {
-                    Vm.user = null;
+                    vm.user = null;
                 }
-                Vm.isLoading = false;
+                vm.isLoading = false;
                 console.log('请求失败');
             });
         })

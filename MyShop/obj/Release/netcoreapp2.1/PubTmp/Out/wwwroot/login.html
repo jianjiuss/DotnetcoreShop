@@ -125,9 +125,10 @@
     <script src="js/mui.min.js"></script>
     <script src="js/vue.min.js"></script>
     <script src="js/vue-resource_1.5.1_vue-resource.min.js"></script>
+    <script src="js/common.js"></script>
     <script>
-        window.onload = function () {
-            var Vm = new Vue({
+        appendWindowOnload( function () {
+            var vm = new Vue({
                 el: '#content',
                 data: {
                     user: {
@@ -146,7 +147,7 @@
                     }
                 }
             });
-        }
+        })
     </script>
 </body>
 </html>

@@ -5,6 +5,7 @@ using MyShop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MyShop.Controllers
@@ -21,19 +22,19 @@ namespace MyShop.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Product>> GetAll()
+        public async Task<ActionResult<List<Product>>> GetAllAsync()
         {
-            return _context.Products.ToList();
+            return await _context.Products.ToListAsync();
         }
 
         [HttpGet("category/{categoryId}")]
-        public async Task<ActionResult> GetByCategory(int categoryId)
+        public async Task<ActionResult> GetByCategoryAsync(int categoryId)
         {
             return Ok(await _context.Products.Where(p => p.CategoryId == categoryId).ToListAsync());
         }
 
         [HttpGet("{productId}")]
-        public async Task<ActionResult> Get(int productId)
+        public async Task<ActionResult> GetAsync(int productId)
         {
             var product = await _context.Products
                 .Include(p => p.Descriptions)

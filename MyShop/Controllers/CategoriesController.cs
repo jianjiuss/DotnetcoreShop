@@ -23,7 +23,7 @@ namespace MyShop.Controllers
 
 
         [HttpGet("childs/{id?}")]
-        public async Task<ActionResult> GetAll(int? id)
+        public async Task<ActionResult> GetAllAsync(int? id)
         {
             if(id.HasValue)
             {

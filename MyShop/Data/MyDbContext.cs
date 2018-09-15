@@ -26,6 +26,8 @@ namespace MyShop.Data
             modelBuilder.Entity<ProductDescription>().ToTable("ProductDescription");
             modelBuilder.Entity<ProductTitleImage>().ToTable("ProductTitleImage");
             modelBuilder.Entity<ProductInfoImage>().ToTable("ProductInfoImage");
+            modelBuilder.Entity<ShopCart>().ToTable("ShopCart");
+            modelBuilder.Entity<ShopCartItem>().ToTable("ShopCartItem");
 
             modelBuilder.Entity<ProductTitleImage>().HasKey(p => new { p.ImageId, p.ProductId });
 
@@ -60,6 +62,13 @@ namespace MyShop.Data
 
         public DbSet<ProductDescription> ProductDescriptions { get; set; }
 
-        public DbSet<ProductTitleImage> ProductImages { get; set; }
+        public DbSet<ProductTitleImage> ProductTitleImages { get; set; }
+
+        public DbSet<ProductInfoImage> ProductInfoImages { get; set; }
+
+        public DbSet<ShopCart> ShopCarts { get; set; }
+
+        public DbSet<ShopCartItem> ShopCartItems { get; set; }
+
     }
 }

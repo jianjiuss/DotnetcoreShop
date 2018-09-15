@@ -49,7 +49,7 @@
     <script src="js/vue-resource_1.5.1_vue-resource.min.js"></script>
     <script src="js/common.js"></script>
     <script type="text/javascript">
-        window.onload = function () {
+        appendWindowOnload( function () {
             var vm = new Vue({
                 el: '#content',
                 data: {
@@ -59,26 +59,25 @@
                     toDetail: function (id) {
                         window.location.href = "/product-detail.html?productId=" + id;
                     }
-                },
-                created: function () {
-                    var id = getQueryVariable("id");
-                    if (id) {
-                        this.$http.get('/api/product/category/' + id).then(function (res) {
-                            this.products = res.body;
-                        }, function () {
-                            console.log('请求失败');
-                        });
-                    }
-                    else {
-                        this.$http.get('/api/product').then(function (res) {
-                            this.products = res.body;
-                        }, function () {
-                            console.log('请求失败');
-                        });
-                    }
                 }
             });
-        }
+
+            var id = getQueryVariable("id");
+            if (id) {
+                Vue.http.get('/api/product/category/' + id).then(function (res) {
+                    vm.products = res.body;
+                }, function () {
+                    console.log('请求失败');
+                });
+            }
+            else {
+                Vue.http.get('/api/product').then(function (res) {
+                    vm.products = res.body;
+                }, function () {
+                    console.log('请求失败');
+                });
+            }
+        })
     </script>
 
 </html>

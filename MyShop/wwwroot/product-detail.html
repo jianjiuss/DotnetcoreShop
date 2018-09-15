@@ -61,9 +61,7 @@
 </head>
 <body>
     <div id="content">
-        <template v-if="isLoading">
-            <div class="jui-loading"></div>
-        </template>
+        <div class="jui-loading" v-if="isLoading"></div>
 
         <template v-if="!isLoading">
 

@@ -28,98 +28,105 @@
     </nav>
 
     <div class="mui-content" id="content">
+        <div class="jui-loading" v-if="isLoading">
+        </div>
+        
+        <template v-if="!isLoading">
 
-        <template v-if="user != null">
-            <ul class="mui-table-view mui-table-view-chevron">
-                <li class="mui-table-view-cell mui-media">
-                    <a class="mui-navigate-right" href="#account">
-                        <img class="mui-media-object mui-pull-left head-img" id="head-img" src="images/logo.png">
-                        <div class="mui-media-body">
-                            <span v-text="user.name"></span>
-                            <p class='mui-ellipsis'>账号:<span v-text="user.name"></span></p>
+            <template v-if="user != null">
+                <ul class="mui-table-view mui-table-view-chevron">
+                    <li class="mui-table-view-cell mui-media">
+                        <a class="mui-navigate-right" href="#account">
+                            <img class="mui-media-object mui-pull-left head-img" id="head-img" src="images/logo.png">
+                            <div class="mui-media-body">
+                                <span v-text="user.name"></span>
+                                <p class='mui-ellipsis'>账号:<span v-text="user.name"></span></p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="mui-table-view mui-table-view-chevron" style="margin-top: 20px;">
+                    <li class="mui-table-view-cell">
+                        <a href="#account" class="mui-navigate-right">我的全部订单</a>
+                    </li>
+                </ul>
+                <ul class="mui-table-view mui-grid-view">
+                    <li class="mui-table-view-cell mui-media mui-col-xs-3">
+                        <a href="#">
+                            <span class="mui-icon-extra mui-icon-extra-card"></span>
+                            <div class="mui-media-body">待支付</div>
+                        </a>
+                    </li>
+                    <li class="mui-table-view-cell mui-media mui-col-xs-3">
+                        <a href="#">
+                            <span class="mui-icon-extra mui-icon-extra-express"></span>
+                            <div class="mui-media-body">待发货</div>
+                        </a>
+                    </li>
+                    <li class="mui-table-view-cell mui-media mui-col-xs-3">
+                        <a href="#">
+                            <span class="mui-icon-extra mui-icon-extra-topic"></span>
+                            <div class="mui-media-body">待收货</div>
+                        </a>
+                    </li>
+                    <li class="mui-table-view-cell mui-media mui-col-xs-3">
+                        <a href="#">
+                            <span class="mui-icon-extra mui-icon-extra-gift"></span>
+                            <div class="mui-media-body">已完成</div>
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="mui-table-view mui-grid-view" style="margin-top: 20px;">
+                    <li class="mui-table-view-cell mui-media mui-col-xs-3">
+                        <a href="#">
+                            <span class="mui-icon mui-icon-location"></span>
+                            <div class="mui-media-body">收货地址</div>
+                        </a>
+                    </li>
+                    <li class="mui-table-view-cell mui-media mui-col-xs-3">
+                        <a href="#">
+                            <span class="mui-icon-extra mui-icon-extra-heart"></span>
+                            <div class="mui-media-body">我的收藏</div>
+                        </a>
+                    </li>
+                </ul>
+            </template>
+
+            <template v-if="user == null">
+                <div class="mui-card">
+                    <div class="mui-card-content">
+                        <div class="mui-card-content-inner">
+                            当前未登录账号，请先点击下面按钮进行登录。
                         </div>
-                    </a>
-                </li>
-            </ul>
-
-            <ul class="mui-table-view mui-table-view-chevron" style="margin-top: 20px;">
-                <li class="mui-table-view-cell">
-                    <a href="#account" class="mui-navigate-right">我的全部订单</a>
-                </li>
-            </ul>
-            <ul class="mui-table-view mui-grid-view">
-                <li class="mui-table-view-cell mui-media mui-col-xs-3">
-                    <a href="#">
-                        <span class="mui-icon-extra mui-icon-extra-card"></span>
-                        <div class="mui-media-body">待支付</div>
-                    </a>
-                </li>
-                <li class="mui-table-view-cell mui-media mui-col-xs-3">
-                    <a href="#">
-                        <span class="mui-icon-extra mui-icon-extra-express"></span>
-                        <div class="mui-media-body">待发货</div>
-                    </a>
-                </li>
-                <li class="mui-table-view-cell mui-media mui-col-xs-3">
-                    <a href="#">
-                        <span class="mui-icon-extra mui-icon-extra-topic"></span>
-                        <div class="mui-media-body">待收货</div>
-                    </a>
-                </li>
-                <li class="mui-table-view-cell mui-media mui-col-xs-3">
-                    <a href="#">
-                        <span class="mui-icon-extra mui-icon-extra-gift"></span>
-                        <div class="mui-media-body">已完成</div>
-                    </a>
-                </li>
-            </ul>
-
-            <ul class="mui-table-view mui-grid-view" style="margin-top: 20px;">
-                <li class="mui-table-view-cell mui-media mui-col-xs-3">
-                    <a href="#">
-                        <span class="mui-icon mui-icon-location"></span>
-                        <div class="mui-media-body">收货地址</div>
-                    </a>
-                </li>
-                <li class="mui-table-view-cell mui-media mui-col-xs-3">
-                    <a href="#">
-                        <span class="mui-icon-extra mui-icon-extra-heart"></span>
-                        <div class="mui-media-body">我的收藏</div>
-                    </a>
-                </li>
-            </ul>
-        </template>
-
-        <template v-if="user == null">
-            <div class="mui-card">
-                <div class="mui-card-content">
-                    <div class="mui-card-content-inner">
-                        当前未登录账号，请先点击下面按钮进行登录。
                     </div>
                 </div>
-            </div>
 
-            <div class="mui-content-padded">
-                <button type="button" class="mui-btn mui-btn-primary mui-btn-block" v-on:click="toLogin()">登录</button>
-                <button type="button" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined" v-on:click="toRegister()">注册</button>
-            </div>
+                <div class="mui-content-padded">
+                    <button type="button" class="mui-btn mui-btn-primary mui-btn-block" v-on:click="toLogin()">登录</button>
+                    <button type="button" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined" v-on:click="toRegister()">注册</button>
+                </div>
+            </template>
         </template>
 
     </div>
     <script src="js/mui.js"></script>
     <script src="js/vue.min.js"></script>
     <script src="js/vue-resource_1.5.1_vue-resource.min.js"></script>
+    <script src="js/common.js"></script>
     <script>
-        window.onload = function () {
+        appendWindowOnload( function () {
             mui('.mui-bar-tab').on('tap', 'a', function () {
                 console.log(this.getAttribute('href'));
                 location.href = this.getAttribute('href');
             });
 
-            var Vm = new Vue({
+            var vm = new Vue({
                 el: '#content',
                 data: {
-                    user: null
+                    user: null,
+                    isLoading: true
                 },
                 methods: {
                     toLogin: function () {
@@ -130,17 +137,21 @@
                     }
                 },
                 created: function () {
-                    this.$http.get("/api/user").then(function (res) {
-                        this.user = res.body;
-                    }, function (res) {
-                        if (res.status == 401) {
-                            user = null;
-                        }
-                        console.log('请求失败');
-                    });
+                    
                 }
             });
-        }
+
+            Vue.http.get("/api/user").then(function (res) {
+                vm.user = res.body;
+                vm.isLoading = false;
+            }, function (res) {
+                if (res.status == 401) {
+                    vm.user = null;
+                }
+                vm.isLoading = false;
+                console.log('请求失败');
+            });
+        })
     </script>
 </body>
 </html>

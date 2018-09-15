@@ -61,85 +61,90 @@
 </head>
 <body>
     <div id="content">
-        <div id="slider" class="mui-slider">
-            <div class="mui-slider-group mui-slider-loop">
-                <template v-if="product.titleImages != null && product.titleImages.length > 0">
-                    <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
-                    <div class="mui-slider-item mui-slider-item-duplicate">
-                        <a href="#">
-                            <img v-bind:src="product.titleImages[product.titleImages.length - 1].image.imageUrl">
-                        </a>
-                    </div>
+        <div class="jui-loading" v-if="isLoading"></div>
 
-                    <template v-for="titleImage in product.titleImages">
-                        <div class="mui-slider-item">
+        <template v-if="!isLoading">
+
+            <div id="slider" class="mui-slider">
+                <div class="mui-slider-group mui-slider-loop">
+                    <template v-if="product.titleImages != null && product.titleImages.length > 0">
+                        <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+                        <div class="mui-slider-item mui-slider-item-duplicate">
                             <a href="#">
-                                <img v-bind:src="titleImage.image.imageUrl">
+                                <img v-bind:src="product.titleImages[product.titleImages.length - 1].image.imageUrl">
+                            </a>
+                        </div>
+
+                        <template v-for="titleImage in product.titleImages">
+                            <div class="mui-slider-item">
+                                <a href="#">
+                                    <img v-bind:src="titleImage.image.imageUrl">
+                                </a>
+                            </div>
+                        </template>
+
+                        <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+                        <div class="mui-slider-item mui-slider-item-duplicate">
+                            <a href="#">
+                                <img v-bind:src="product.titleImages[0].image.imageUrl">
                             </a>
                         </div>
                     </template>
+                </div>
+                <div class="mui-slider-indicator">
 
-                    <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
-                    <div class="mui-slider-item mui-slider-item-duplicate">
-                        <a href="#">
-                            <img v-bind:src="product.titleImages[0].image.imageUrl">
-                        </a>
-                    </div>
-                </template>
-            </div>
-            <div class="mui-slider-indicator">
+                    <template v-for="(item, index) in product.titleImages">
+                        <div class="mui-indicator mui-active" v-if="index == 0"></div>
+                        <div class="mui-indicator" v-if="index != 0"></div>
+                    </template>
 
-                <template v-for="(item, index) in product.titleImages">
-                    <div class="mui-indicator mui-active" v-if="index == 0"></div>
-                    <div class="mui-indicator" v-if="index != 0"></div>
-                </template>
-
-            </div>
-        </div>
-
-        <div class="detail">
-            <h4><span v-text="product.name"></span></h4>
-            <div class="detail-money" id="m-rx">
-                <div class="money-left" id="m-price" v-text="'￥' + product.price"></div>
-            </div>
-            <div class="detail-quantity">
-                <div class="quantity-left">库存<span v-text="product.store"></span></div>
-            </div>
-        </div>
-
-        <div style="padding:5px 10px; background-color:#fff;">
-            <div id="segmentedControl"
-                 class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
-                <a class="mui-control-item  mui-active" href="#medDetail">商品详情</a>
-                <a class="mui-control-item" href="#imgDetail">图文详情</a>
-            </div>
-        </div>
-        <div class="tab-container">
-            <!--<h6 class="del  ">图文详情</h6>-->
-            <div class="med-detail img-detail mui-control-content" id="imgDetail">
-                <img style="width:100%;" v-for="infoImage in product.infoImages" v-bind:src="infoImage.image.imageUrl"/>
-            </div>
-            <!-- <h6 class="del  ">基本信息</h6>-->
-            <div class="med-detail  mui-active mui-control-content med-detail1" id="medDetail">
-
-                <template v-for="description in product.descriptions">
-                    <div class="detail-content">
-                        <p class="title">-{{description.title}}</p>
-                        <p class="content">-{{description.content}}</p>
-                    </div>
-                </template>
-
+                </div>
             </div>
 
-        </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+            <div class="detail">
+                <h4><span v-text="product.name"></span></h4>
+                <div class="detail-money" id="m-rx">
+                    <div class="money-left" id="m-price" v-text="'￥' + product.price"></div>
+                </div>
+                <div class="detail-quantity">
+                    <div class="quantity-left">库存<span v-text="product.store"></span></div>
+                </div>
+            </div>
+
+            <div style="padding:5px 10px; background-color:#fff;">
+                <div id="segmentedControl"
+                     class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
+                    <a class="mui-control-item  mui-active" href="#medDetail">商品详情</a>
+                    <a class="mui-control-item" href="#imgDetail">图文详情</a>
+                </div>
+            </div>
+            <div class="tab-container">
+                <!--<h6 class="del  ">图文详情</h6>-->
+                <div class="med-detail img-detail mui-control-content" id="imgDetail">
+                    <img style="width:100%;" v-for="infoImage in product.infoImages" v-bind:src="infoImage.image.imageUrl" />
+                </div>
+                <!-- <h6 class="del  ">基本信息</h6>-->
+                <div class="med-detail  mui-active mui-control-content med-detail1" id="medDetail">
+
+                    <template v-for="description in product.descriptions">
+                        <div class="detail-content">
+                            <p class="title">-{{description.title}}</p>
+                            <p class="content">-{{description.content}}</p>
+                        </div>
+                    </template>
+
+                </div>
+
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </template>
 
         <!--底部的工具条开始-->
         <nav class="mui-bar mui-bar-tab" style="font-size: 0; padding: 0px; margin: 0px;">
@@ -168,22 +173,17 @@
     <script src="js/vue-resource_1.5.1_vue-resource.min.js"></script>
     <script src="js/common.js"></script>
     <script type="text/javascript">
-        window.onload = function () {
+        appendWindowOnload( function () {
 
             var vm = new Vue({
                 el: '#content',
                 data: {
                     product: {
                         
-                    }
+                    },
+                    isLoading: true
                 },
                 methods: {
-                },
-                created: function () {
-                    var id = getQueryVariable("productId");
-                    this.$http.get("/api/product/" + id).then(function (res) {
-                        this.product = res.body;
-                    }, function () { console.log('请求失败'); })
                 },
                 updated: function () {
                     var slider = mui(".mui-slider");
@@ -198,7 +198,16 @@
                     });
                 }
             });
-        }
+
+            var id = getQueryVariable("productId");
+            Vue.http.get("/api/product/" + id).then(function (res) {
+                vm.product = res.body;
+                vm.isLoading = false;
+            }, function () {
+                console.log('请求失败');
+                vm.isLoading = false;
+            })
+        })
     </script>
 
 </html >

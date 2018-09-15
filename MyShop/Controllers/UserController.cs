@@ -33,15 +33,11 @@ namespace MyShop.Controllers
         [Authorize]
         public ActionResult<object> Get()
         {
-            if(HttpContext.User != null)
-            {
-                return new { Name = HttpContext.User.Identity.Name };
-            }
-            return NotFound();
+            return new { Name = HttpContext.User.Identity.Name };
         }
         
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] UserLoginJson loginInfo)
+        public async Task<IActionResult> LoginAsync([FromBody] UserLoginJson loginInfo)
         {
             var result = await _signInManager.PasswordSignInAsync(loginInfo.Name, loginInfo.Password, false, false);
             if(result.Succeeded)
@@ -53,7 +49,7 @@ namespace MyShop.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Register([FromBody] UserRegisterJson registerInfo)
+        public async Task<IActionResult> RegisterAsync([FromBody] UserRegisterJson registerInfo)
         {
             if(!ModelState.IsValid)
             {
@@ -73,10 +69,10 @@ namespace MyShop.Controllers
         }
 
         [HttpGet("logout")]
-        public async Task<string> Logout()
+        public async Task<IActionResult> LogoutAsync()
         {
             await _signInManager.SignOutAsync();
-            return "Logout";
+            return Ok();
         }
 
         public class UserLoginJson
