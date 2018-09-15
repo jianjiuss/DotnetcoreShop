@@ -160,7 +160,7 @@
                 <span class="iconfont icon-kanjiax" style="font-size: 20px;"></span>
                 <span style="font-size: 16px;">加入购物车</span>
             </button>
-            <button type="button" class="mui-btn" style="background-color:#ff651b;color:#fff;font-size: 25px;width:35%;height: 100%;  top:0px;" v-on:click="changeProduct()">
+            <button type="button" class="mui-btn" style="background-color:#ff651b;color:#fff;font-size: 25px;width:35%;height: 100%;  top:0px;" v-on:click="addProduct()">
                 <span class="iconfont icon-dianhua1" style="font-size: 20px;"></span>
                 <span style="font-size: 16px;">立即购买</span>
             </button>
@@ -184,6 +184,15 @@
                     isLoading: true
                 },
                 methods: {
+                    addProduct: function () {
+                        this.$http.put("/api/shopcart", { productId: this.product.id, numb: 1 }).then(function () {
+                            window.location.href = "/shopcart.html";
+                        }, function (res) {
+                            if (res.status == 401) {
+                                mui.toast("请先登录再购买");
+                            }
+                        })
+                    }
                 },
                 updated: function () {
                     var slider = mui(".mui-slider");

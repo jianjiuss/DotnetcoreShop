@@ -18,7 +18,7 @@
 <body>
     <div id="content">
         <nav class="mui-bar mui-bar-tab">
-            <ul class="mui-table-view" v-if="!isLoading || isNeedLogin">
+            <ul class="mui-table-view" v-if="!isLoading && !isNeedLogin">
                 <li class="mui-table-view-cell" style="height:40px;">
                     <span>总价:￥{{shopCart.totalPrice}}</span>
                     <button type="button" class="mui-btn" style="background-color:#ff651b;color:#fff;font-size: 25px;width:25%;right: 0px;">
@@ -54,7 +54,7 @@
                     <div class="mui-card">
                         <div class="mui-card-content">
                             <div class="mui-card-content-inner">
-                                当前未登录账号，请先点击下面按钮进行登录。
+                                当前未登录账号，请先切换到个人中心进行登录。
                             </div>
                         </div>
                     </div>
