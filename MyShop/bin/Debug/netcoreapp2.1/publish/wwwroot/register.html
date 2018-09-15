@@ -71,9 +71,8 @@
     <script src="js/mui.min.js"></script>
     <script src="js/vue.min.js"></script>
     <script src="js/vue-resource_1.5.1_vue-resource.min.js"></script>
-    <script src="js/common.js"></script>
     <script>
-        appendWindowOnload( function () {
+        window.onload = function () {
             var Vm = new Vue({
                 el: '#content',
                 data: {
@@ -95,7 +94,7 @@
                     }
                 }
             });
-        })
+        }
     </script>
 </body>
 </html>

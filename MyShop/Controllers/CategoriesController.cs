@@ -12,7 +12,7 @@ namespace MyShop.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriesController : Controller
+    public class CategoriesController : ControllerBase
     {
         private readonly MyDbContext _context;
 
@@ -27,11 +27,11 @@ namespace MyShop.Controllers
         {
             if(id.HasValue)
             {
-                return Json(await _context.Categories.Where(c => c.ParentId == id).ToListAsync());
+                return Ok(await _context.Categories.Where(c => c.ParentId == id).ToListAsync());
             }
             else
             {
-                return Json(await _context.Categories.Where(c => c.ParentId == null).ToListAsync());
+                return Ok(await _context.Categories.Where(c => c.ParentId == null).ToListAsync());
             }
         }
     }

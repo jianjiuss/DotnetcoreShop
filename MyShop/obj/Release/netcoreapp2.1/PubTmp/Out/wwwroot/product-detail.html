@@ -98,12 +98,12 @@
         </div>
 
         <div class="detail">
-            <h4>{{product.name}}</h4>
+            <h4><span v-text="product.name"></span></h4>
             <div class="detail-money" id="m-rx">
-                <div class="money-left" id="m-price">￥{{product.price}}</div>
+                <div class="money-left" id="m-price" v-text="'￥' + product.price"></div>
             </div>
             <div class="detail-quantity">
-                <div class="quantity-left">库存{{product.store}}</div>
+                <div class="quantity-left">库存<span v-text="product.store"></span></div>
             </div>
         </div>
 

@@ -153,7 +153,10 @@
                     this.$http.get('/api/categories/childs').then(function (res) {
                         res.body.splice(0, 0, { id: -1, name: "全部" });
                         this.topCategories = res.body;
-                    }, function () {
+                    }, function (res) {
+                        if (res.status == 401) {
+                            window.location.href = "/user/login";
+                        }
                         console.log('请求失败');
                     });
 

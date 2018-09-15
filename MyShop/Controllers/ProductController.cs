@@ -11,7 +11,7 @@ namespace MyShop.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : Controller
+    public class ProductController : ControllerBase
     {
         private readonly MyDbContext _context;
 
@@ -29,7 +29,7 @@ namespace MyShop.Controllers
         [HttpGet("category/{categoryId}")]
         public async Task<ActionResult> GetByCategory(int categoryId)
         {
-            return Json(await _context.Products.Where(p => p.CategoryId == categoryId).ToListAsync());
+            return Ok(await _context.Products.Where(p => p.CategoryId == categoryId).ToListAsync());
         }
 
         [HttpGet("{productId}")]
@@ -41,7 +41,7 @@ namespace MyShop.Controllers
                 .Include(p => p.TitleImages).ThenInclude(i => i.Image)
                 .FirstOrDefaultAsync(p => p.Id == productId);
 
-            return Json(product);
+            return Ok(product);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace MyShop.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class WxController : Controller
+    public class WxController : ControllerBase
     {
         [HttpGet]
         public ActionResult<string> WeChatCheck(string signature, string timestamp, string nonce, string echostr)
