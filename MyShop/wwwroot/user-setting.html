@@ -36,7 +36,7 @@
             <template v-if="user != null">
                 <ul class="mui-table-view mui-table-view-chevron">
                     <li class="mui-table-view-cell mui-media">
-                        <a class="mui-navigate-right" href="#account">
+                        <a class="mui-navigate-right" href="/userinfo-edit.html">
                             <img class="mui-media-object mui-pull-left head-img" id="head-img" src="images/logo.png">
                             <div class="mui-media-body">
                                 <span v-text="user.name"></span>
@@ -92,6 +92,10 @@
                         </a>
                     </li>
                 </ul>
+
+                <div class="mui-content-padded">
+                    <button type="button" class="mui-btn mui-btn-danger mui-btn-block" v-on:click="logout">退出账号</button>
+                </div>
             </template>
 
             <template v-if="user == null">
@@ -134,6 +138,10 @@
                     },
                     toRegister: function () {
                         window.location.href = "/register.html";
+                    },
+                    logout: function () {
+                        this.$http.get("/api/user/logout");
+                        this.user = null;
                     }
                 },
                 created: function () {

@@ -31,9 +31,23 @@ namespace MyShop.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult<object> Get()
+        public async Task<IActionResult> Get()
         {
-            return new { Name = HttpContext.User.Identity.Name };
+            var iuser = await _userManager.GetUserAsync(User);
+            var name = User.Identity.Name;
+            var gender = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Gender)?.Value;
+            var age = User.Claims.FirstOrDefault(c => c.Type == ClaimTypesExtensions.Age)?.Value;
+            var locality = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Locality)?.Value;
+            var phone = iuser.PhoneNumber;
+
+            return Ok(new
+            {
+                Name = name,
+                Gender = gender,
+                Age = age,
+                Locality = locality,
+                Phone = phone
+            });
         }
         
         [HttpPost]
@@ -60,6 +74,7 @@ namespace MyShop.Controllers
             var result = await _userManager.CreateAsync(user, registerInfo.Password);
             if (result.Succeeded)
             {
+                await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Gender, "male"));
                 return Ok();
             }
             else
