@@ -20,8 +20,8 @@
         <nav class="mui-bar mui-bar-tab">
             <ul class="mui-table-view" v-if="!isLoading && !isNeedLogin">
                 <li class="mui-table-view-cell" style="height:40px;">
-                    <span>总价:￥{{shopCart.totalPrice}}</span>
-                    <button type="button" class="mui-btn" style="background-color:#ff651b;color:#fff;font-size: 25px;width:25%;right: 0px;">
+                    <span>总价:￥{{totalPrice}}</span>
+                    <button type="button" v-on:click="confirm()" class="mui-btn" style="background-color:#ff651b;color:#fff;font-size: 25px;width:25%;right: 0px;">
                         <span style="font-size: 16px;">去结算</span>
                     </button>
                 </li>
@@ -61,7 +61,7 @@
 
                 </template>
 
-                <template v-if="!isNeedLogin">
+                <template v-if="!isNeedLogin && !isLoading">
 
                     <ul class="mui-table-view">
                         <li class="mui-table-view-cell">
@@ -73,9 +73,9 @@
 
                         <template v-for="item in shopCart.shopCartItems">
                             <li class="mui-table-view-cell mui-media mui-checkbox mui-left">
-                                <input name="checkbox" type="checkbox" style="padding: 30px 0;" v-bind:checked="item.isCheck" />
+                                <input name="checkbox" type="checkbox" style="padding: 30px 0;" v-model="item.isCheck" v-on:click="checkItem(item, item.isCheck)"/>
                                 <div>
-                                    <a href="javascript:;">
+                                    <a v-on:click="toProductDetail(item.product.id)">
                                         <img class="mui-media-object mui-pull-left" v-bind:src="item.product.iconImageUrl">
                                         <div class="mui-media-body">
                                             <span v-text="item.product.name"></span>
@@ -83,10 +83,10 @@
                                         </div>
                                     </a>
                                 </div>
-                                <div class="mui-numbox" style="float: right; height: 35px;">
-                                    <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-                                    <input class="mui-input-numbox" type="number" v-bind:value="item.count" />
-                                    <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+                                <div class="mui-numbox" data-numbox-min='1' v-bind:data-numbox-max="item.product.store" style="float: right; height: 35px;">
+                                    <button class="mui-btn mui-btn-numbox-minus" type="button" >-</button>
+                                    <input class="mui-input-numbox" type="number" v-bind:value="item.count" v-on:change="changeItem(item, item.isCheck, $event)"/>
+                                    <button class="mui-btn mui-btn-numbox-plus" type="button" >+</button>
                                 </div>
                                 <div style="float: right;height: 35px;padding-top: 10px;">
                                     <a style="padding-right: 20px;" v-on:click="removeItem(item.id)">删除</a>
@@ -126,18 +126,35 @@
                     removeItem: function (id) {
                         this.$http.delete("/api/shopcart/" + id).then(function (res) {
                             var removeItemIndex;
-                            for (var i = 0; i < this.shopCart.shopCartItems.length; i++){
+                            for (var i = 0; i < this.shopCart.shopCartItems.length; i++) {
                                 var item = this.shopCart.shopCartItems[i];
                                 if (item.id == id) {
                                     removeItemIndex = i;
                                 }
                             }
                             this.shopCart.shopCartItems.splice(removeItemIndex, 1);
-
-                            updateTotalPrice();
-                        }, function (res) {
-
                         });
+                    },
+                    changeItem: function (item, isCheck, event) {
+                        item.count = event.target.value;
+                        this.$http.post("/api/shopcart", {
+                            cartItemId: item.id,
+                            numb: item.count,
+                            isCheck: isCheck
+                        });
+                    },
+                    checkItem: function (item, isCheck) {
+                        this.$http.post("/api/shopcart", {
+                            cartItemId: item.id,
+                            numb: item.count,
+                            isCheck: isCheck
+                        });
+                    },
+                    confirm: function () {
+                        console.log(this.shopCart.shopCartItems.toString());
+                    },
+                    toProductDetail: function(productId) {
+                        window.location.href = "/product-detail.html?productId=" + productId;
                     }
                 },
                 updated: function () {
@@ -145,9 +162,23 @@
                 },
                 mounted: function () {
                     mui('.mui-numbox').numbox();
+                },
+                computed: {
+                    totalPrice: {
+                        get: function () {
+                            var totalPrice = 0;
+                            for (var i = 0; i < this.shopCart.shopCartItems.length; i++) {
+                                var item = this.shopCart.shopCartItems[i];
+                                if (item.isCheck) {
+                                    totalPrice += (item.product.price * item.count);
+                                }
+                            }
+                            this.shopCart.totalPrice = totalPrice;
+                            return totalPrice;
+                        }
+                    }
                 }
             });
-
             
             mui('.mui-bar-tab').on('tap', 'a', function () {
                 console.log(this.getAttribute('href'));
@@ -164,15 +195,6 @@
                 vm.isNeedLogin = true;
             });
         })
-
-        function updateTotalPrice() {
-            var totalPrice = 0;
-            for (var i = 0; i < vm.shopCart.shopCartItems.length; i++) {
-                var item = vm.shopCart.shopCartItems[i];
-                totalPrice += (item.product.price * item.count);
-            }
-            vm.shopCart.totalPrice = totalPrice;
-        }
     </script>
 </body>
 </html>

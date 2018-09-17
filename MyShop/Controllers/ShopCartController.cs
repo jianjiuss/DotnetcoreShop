@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using MyShop.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
 
 namespace MyShop.Controllers
 {
@@ -58,20 +59,29 @@ namespace MyShop.Controllers
 
             var shopCartItem = shopCart.ShopCartItems
                 .FirstOrDefault(i => i.ProductId == addProductJson.ProductId);
-            if(shopCartItem == null)
+
+            if (shopCartItem == null)
             {
                 var product = await _context.Products
                     .FindAsync(addProductJson.ProductId);
-                if(product == null)
+                if (product == null)
                 {
                     return NotFound("没有找到此商品");
                 }
                 var cartItem = new ShopCartItem() { Product = product, Count = addProductJson.Numb, ShopCart = shopCart, IsCheck = true};
+                if(cartItem.Count > product.Store)
+                {
+                    return BadRequest("库存不足");
+                }
                 shopCart.ShopCartItems.Add(cartItem);
             }
             else
             {
                 shopCartItem.Count += addProductJson.Numb;
+                if(shopCartItem.Count > shopCartItem.Product.Store)
+                {
+                    return BadRequest("购物车购买数量已经超出库存数量");
+                }
             }
 
             _context.SaveChanges();
@@ -120,7 +130,11 @@ namespace MyShop.Controllers
             item.IsCheck = updateItemJson.IsCheck;
             if(item.Count <= 0)
             {
-                return BadRequest();
+                return BadRequest("购买数量不能少于1");
+            }
+            if(item.Count > item.Product.Store)
+            {
+                return BadRequest("库存不足");
             }
             await _context.SaveChangesAsync();
             return Ok();
