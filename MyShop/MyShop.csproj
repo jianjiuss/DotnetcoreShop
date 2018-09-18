@@ -10,6 +10,7 @@
     <None Include="wwwroot\images\banner3.svg" />
     <None Include="wwwroot\js\site.js" />
     <None Include="wwwroot\js\site.min.js" />
+    <None Include="wwwroot\user-collections.html" />
   </ItemGroup>
 
   <ItemGroup>

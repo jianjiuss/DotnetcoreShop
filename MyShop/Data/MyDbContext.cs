@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace MyShop.Data
 {
-    public class MyDbContext : IdentityDbContext
+    public class MyDbContext : IdentityDbContext<ApplicationUser,ApplicationRole, Guid>
     {
         public MyDbContext(DbContextOptions<MyDbContext> options)
             : base(options)
@@ -28,6 +28,7 @@ namespace MyShop.Data
             modelBuilder.Entity<ProductInfoImage>().ToTable("ProductInfoImage");
             modelBuilder.Entity<ShopCart>().ToTable("ShopCart");
             modelBuilder.Entity<ShopCartItem>().ToTable("ShopCartItem");
+            modelBuilder.Entity<UserProductCollection>().ToTable("UserProductCollection");
 
             modelBuilder.Entity<ProductTitleImage>().HasKey(p => new { p.ImageId, p.ProductId });
 
@@ -52,6 +53,18 @@ namespace MyShop.Data
                 .HasOne(pi => pi.Image)
                 .WithMany(t => t.ProductInfoImages)
                 .HasForeignKey(pi => pi.ImageId);
+
+            modelBuilder.Entity<UserProductCollection>().HasKey(p => new { p.ProductId, p.UserId });
+
+            modelBuilder.Entity<UserProductCollection>()
+                .HasOne(p => p.Product)
+                .WithMany(u => u.UserProductCollections)
+                .HasForeignKey(p => p.ProductId);
+
+            modelBuilder.Entity<UserProductCollection>()
+                .HasOne(p => p.User)
+                .WithMany(u => u.UserProductCollections)
+                .HasForeignKey(p => p.UserId);
         }
 
         public DbSet<Product> Products { get; set; }
@@ -69,6 +82,8 @@ namespace MyShop.Data
         public DbSet<ShopCart> ShopCarts { get; set; }
 
         public DbSet<ShopCartItem> ShopCartItems { get; set; }
+
+        public DbSet<UserProductCollection> UserProductCollections { get; set; }
 
     }
 }

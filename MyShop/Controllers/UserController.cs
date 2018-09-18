@@ -18,14 +18,14 @@ namespace MyShop.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private const string maleHeadphotoUrl = "/images/userHeadphoto/male_headphoto.png";
         private const string femaleHeadphotoUrl = "/images/userHeadphoto/female_headphoto.png";
 
         public UserController(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -74,7 +74,7 @@ namespace MyShop.Controllers
             return Ok();
         }
 
-        private async Task<IdentityResult> UpdateClaimAsync(IdentityUser user, string claimType, Claim newClaim)
+        private async Task<IdentityResult> UpdateClaimAsync(ApplicationUser user, string claimType, Claim newClaim)
         {
             var oldClaims = (await _userManager.GetClaimsAsync(user)).FirstOrDefault(c => c.Type == claimType);
             if (oldClaims == null)
@@ -107,7 +107,7 @@ namespace MyShop.Controllers
                 return BadRequest(ModelState.First().Value.Errors.First().ErrorMessage);
             }
 
-            var user = new IdentityUser() { UserName = registerInfo.Name, Email = registerInfo.Email };
+            var user = new ApplicationUser() { UserName = registerInfo.Name, Email = registerInfo.Email };
             var result = await _userManager.CreateAsync(user, registerInfo.Password);
             if (result.Succeeded)
             {

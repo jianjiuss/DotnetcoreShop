@@ -11,10 +11,10 @@ namespace MyShop.Models
     public class ShopCart
     {
         public int Id { get; set; }
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
         [JsonIgnore]
         [ForeignKey("UserId")]
-        public IdentityUser User { get; set; }
+        public ApplicationUser User { get; set; }
         public double TotalPrice
         {
             get

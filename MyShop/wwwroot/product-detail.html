@@ -160,6 +160,10 @@
             width: 100%;
             height: 100%;
         }
+
+        .mui-icon-extra-heart-filled {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -281,8 +285,8 @@
 
         <!--底部的工具条开始-->
         <nav class="mui-bar mui-bar-tab" style="font-size: 0; padding: 0px; margin: 0px;">
-            <button type="button" class="mui-btn" style="width:15%; top:0px; padding-top:0px;padding-bottom:0px;">
-                <span class="mui-icon-extra mui-icon-extra-heart-filled" style="font-size:25px;padding-bottom:0px;"></span><br />
+            <button type="button" class="mui-btn" style="width:15%; top:0px; padding-top:0px;padding-bottom:0px;" v-on:click="addToCollections">
+                <span class="mui-icon-extra" v-bind:class="collectionIconClass" style="font-size:25px;padding-bottom:0px;"></span><br />
                 <span style="font-size:12px;">收藏</span>
             </button>
             <button type="button" class="mui-btn" style="width:15%; top:0px; padding-top:0px;padding-bottom:0px;" v-on:click="toCart()">
@@ -316,7 +320,8 @@
                         
                     },
                     isLoading: true,
-                    addCartNumb: 1
+                    addCartNumb: 1,
+                    isCollected:false
                 },
                 methods: {
                     addProduct: function () {
@@ -354,6 +359,17 @@
                     },
                     toCart: function () {
                         window.location.href = "/shopcart.html";
+                    },
+                    addToCollections: function () {
+                        if (this.isCollected) {
+                            this.$http.delete("/api/usercollection/" + this.product.id).then(function () {
+                                this.isCollected = false;
+                            })
+                        } else {
+                            this.$http.put("/api/usercollection/" + this.product.id).then(function () {
+                                this.isCollected = true;
+                            })
+                        }
                     }
                 },
                 updated: function () {
@@ -368,6 +384,14 @@
                     slider.slider({
                         interval: 2000 //自动轮播周期，若为0则不自动播放，默认为0；
                     });
+                },
+                computed: {
+                    collectionIconClass: function () {
+                        return {
+                            "mui-icon-extra-heart-filled": this.isCollected,
+                            "mui-icon-extra-heart": !this.isCollected
+                        }
+                    }
                 }
             });
 
@@ -375,10 +399,15 @@
             Vue.http.get("/api/product/" + id).then(function (res) {
                 vm.product = res.body;
                 vm.isLoading = false;
+                Vue.http.get("/api/usercollection/" + vm.product.id).then(function (res) {
+                    vm.isCollected = true;
+                });
             }, function () {
                 console.log('请求失败');
                 vm.isLoading = false;
             })
+
+            
         })
     </script>
 

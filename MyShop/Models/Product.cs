@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -28,5 +29,8 @@ namespace MyShop.Models
         public ICollection<ProductTitleImage> TitleImages { get; set; }
         
         public ICollection<ProductInfoImage> InfoImages { get; set; }
+
+        [JsonIgnore]
+        public ICollection<UserProductCollection> UserProductCollections { get; set; }
     }
 }

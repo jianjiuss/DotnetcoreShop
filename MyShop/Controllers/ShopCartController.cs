@@ -18,9 +18,9 @@ namespace MyShop.Controllers
     public class ShopCartController : ControllerBase
     {
         private readonly MyDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         public ShopCartController(MyDbContext context
-            ,UserManager<IdentityUser> userManager)
+            ,UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -33,7 +33,7 @@ namespace MyShop.Controllers
 
             if(shopCart == null)
             {
-                shopCart = new ShopCart() { UserId = _userManager.GetUserId(User) };
+                shopCart = new ShopCart() { User = await _userManager.GetUserAsync(User) };
                 await _context.ShopCarts.AddAsync(shopCart);
                 await _context.SaveChangesAsync();
             }
@@ -142,11 +142,11 @@ namespace MyShop.Controllers
 
         private async Task<ShopCart> GetShopCartAsync()
         {
-            var userId = _userManager.GetUserId(User);
+            var user = await _userManager.GetUserAsync(User);
             var shopCart = await _context.ShopCarts
                 .Include(s => s.ShopCartItems)
                 .ThenInclude(i => i.Product)
-                .FirstOrDefaultAsync(s => s.UserId == userId);
+                .FirstOrDefaultAsync(s => s.User == user);
             return shopCart;
         }
 
