@@ -20,6 +20,8 @@ namespace MyShop.Controllers
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private const string maleHeadphotoUrl = "/images/userHeadphoto/male_headphoto.png";
+        private const string femaleHeadphotoUrl = "/images/userHeadphoto/female_headphoto.png";
 
         public UserController(
             UserManager<IdentityUser> userManager,
@@ -31,14 +33,15 @@ namespace MyShop.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAsync()
         {
             var iuser = await _userManager.GetUserAsync(User);
             var name = User.Identity.Name;
-            var gender = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Gender)?.Value;
-            var age = User.Claims.FirstOrDefault(c => c.Type == ClaimTypesExtensions.Age)?.Value;
-            var locality = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Locality)?.Value;
+            var gender = User.FindFirstValue(ClaimTypes.Gender);
+            var age = User.FindFirstValue(ClaimTypesExtensions.Age);
+            var locality = User.FindFirstValue(ClaimTypes.Locality);
             var phone = iuser.PhoneNumber;
+            var headphotoUrl = User.FindFirstValue(ClaimTypesExtensions.HeadphotoUrl);
 
             return Ok(new
             {
@@ -46,10 +49,44 @@ namespace MyShop.Controllers
                 Gender = gender,
                 Age = age,
                 Locality = locality,
-                Phone = phone
+                Phone = phone,
+                HeadphotoUrl = string.IsNullOrEmpty(headphotoUrl) ? maleHeadphotoUrl : headphotoUrl
             });
         }
-        
+
+        [HttpPost("info")]
+        [Authorize]
+        public async Task<IActionResult> UpdateInfoAsync([FromBody] UpdateInfoJson infoJson)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.First().Value.Errors.First().ErrorMessage);
+            }
+
+            var iuser = await _userManager.GetUserAsync(User);
+            await UpdateClaimAsync(iuser, ClaimTypes.Gender, new Claim(ClaimTypes.Gender, infoJson.Gender));
+            await UpdateClaimAsync(iuser, ClaimTypesExtensions.Age, new Claim(ClaimTypesExtensions.Age, infoJson.Age));
+            await UpdateClaimAsync(iuser, ClaimTypes.Locality, new Claim(ClaimTypes.Locality, infoJson.Locality));
+            await UpdateClaimAsync(iuser, ClaimTypesExtensions.HeadphotoUrl, new Claim(ClaimTypesExtensions.HeadphotoUrl, infoJson.Gender.Equals("male") ? maleHeadphotoUrl : femaleHeadphotoUrl));
+            iuser.PhoneNumber = infoJson.Phone;
+            await _signInManager.RefreshSignInAsync(iuser);
+            await _userManager.UpdateAsync(iuser);
+            return Ok();
+        }
+
+        private async Task<IdentityResult> UpdateClaimAsync(IdentityUser user, string claimType, Claim newClaim)
+        {
+            var oldClaims = (await _userManager.GetClaimsAsync(user)).FirstOrDefault(c => c.Type == claimType);
+            if (oldClaims == null)
+            {
+                return await _userManager.AddClaimAsync(user, newClaim);
+            }
+            else
+            {
+                return await _userManager.ReplaceClaimAsync(user, oldClaims, newClaim);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> LoginAsync([FromBody] UserLoginJson loginInfo)
         {
@@ -108,6 +145,17 @@ namespace MyShop.Controllers
             [Required(ErrorMessage = "邮箱是必须的")]
             [EmailAddress(ErrorMessage = "邮箱格式不正确")]
             public string Email { get; set; }
+        }
+
+        public class UpdateInfoJson
+        {
+            [Required]
+            public string Gender { get; set; }
+            public string Age { get; set; }
+            [Required(ErrorMessage ="地区是必须的")]
+            public string Locality { get; set; }
+            [Required(ErrorMessage ="手机号码是必须的")]
+            public string Phone { get; set; }
         }
     }
 }

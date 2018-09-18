@@ -37,7 +37,7 @@
                 <ul class="mui-table-view mui-table-view-chevron">
                     <li class="mui-table-view-cell mui-media">
                         <a class="mui-navigate-right" href="/userinfo-edit.html">
-                            <img class="mui-media-object mui-pull-left head-img" id="head-img" src="images/logo.png">
+                            <img class="mui-media-object mui-pull-left head-img" id="head-img" v-bind:src="user.headphotoUrl">
                             <div class="mui-media-body">
                                 <span v-text="user.name"></span>
                                 <p class='mui-ellipsis'>账号:<span v-text="user.name"></span></p>

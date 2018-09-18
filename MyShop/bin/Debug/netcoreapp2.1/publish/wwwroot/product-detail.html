@@ -57,6 +57,109 @@
             color: #000;
             text-indent: 2em;
         }
+
+        /*buy-item-list*/
+        #buy-item-list {
+            background-color: #fff;
+        }
+
+        #buy-item-list ._title {
+            background-color: rgb(243,243,243);
+            padding: 0 15px;
+            margin: 0;
+            line-height: 30px;
+            font-size: 14px;
+            color: #000;
+        }
+
+        #buy-item-list ._product-img-container {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        #buy-item-list .buy-number-container {
+            padding: 0 15px;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #buy-item-list .buy-number-title {
+            font-size: 14px;
+        }
+
+        .add-buy-car {
+            height: 60px;
+            background-color: #f23030;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .add-buy-car p {
+            font-size: 12px;
+            color: #fff;
+            margin-bottom: 5px;
+            margin-right: 10px;
+        }
+
+        .add-buy-car .next-step {
+            border-left: 1px solid #fff;
+            font-size: 18px;
+            color: #fff;
+            line-height: 30px;
+            padding-left: 10px;
+        }
+
+        ._product-img-container {
+            padding: 8px 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex: auto;
+        }
+
+        ._product-detail h4 {
+            font-weight: normal;
+            font-size: 15px;
+            line-height: 20px;
+        }
+
+        ._product-detail-msg {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        ._product-money {
+            color: #00afc5;
+        }
+
+        ._product-quantity {
+            font-size: 14px;
+            color: #cccccc;
+        }
+
+        ._product-img {
+            max-width: 60px;
+            width: 60px;
+            height: 60px;
+            flex-shrink: 0;
+            margin-right: 5px;
+        }
+
+        ._product-detail {
+            flex-grow: 1;
+        }
+
+        ._product-img img {
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 <body>
@@ -146,17 +249,47 @@
             <br />
         </template>
 
+        <!--购物车选项弹出框-->
+        <div id="buy-item-list" class="mui-popover mui-popover-bottom mui-popover-action" style="z-index:999;">
+            <h4 class="_title">请选择规格数量</h4>
+            <div class="_product-img-container">
+                <div class="_product-img">
+                    <img v-bind:src="product.iconImageUrl">
+                </div>
+                <div class="_product-detail">
+                    <h4 v-text="product.name"></h4>
+                    <div class="_product-detail-msg">
+                        <div class="_product-money">￥<span v-text="product.price"></span></div>
+                        <div class="_product-quantity">剩余：<span v-text="product.store"></span>件</div>
+                    </div>
+                </div>
+            </div>
+            <div class="buy-number-container">
+                <div class="buy-number-title">购买数量</div>
+                <div class="mui-numbox" data-numbox-min='1' v-bind:data-numbox-max="product.store">
+                    <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+                    <input class="mui-input-numbox" type="number" v-bind:value="addCartNumb" v-on:change="changeNumb">
+                    <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+                </div>
+            </div>
+            <div class="add-buy-car" v-on:click="addCart()">
+                <div class="next-step">
+                    加入购物车 >
+                </div>
+            </div>
+        </div>
+
         <!--底部的工具条开始-->
         <nav class="mui-bar mui-bar-tab" style="font-size: 0; padding: 0px; margin: 0px;">
-            <button type="button" class="mui-btn" style="width:15%; top:0px;">
-                <span class="mui-icon-extra mui-icon-extra-heart-filled" style="font-size:25px;"></span><br />
+            <button type="button" class="mui-btn" style="width:15%; top:0px; padding-top:0px;padding-bottom:0px;">
+                <span class="mui-icon-extra mui-icon-extra-heart-filled" style="font-size:25px;padding-bottom:0px;"></span><br />
                 <span style="font-size:12px;">收藏</span>
             </button>
-            <button type="button" class="mui-btn" style="width:15%; top:0px;">
-                <span class="mui-icon-extra mui-icon-extra-cart" style="font-size:25px;"></span><br />
+            <button type="button" class="mui-btn" style="width:15%; top:0px; padding-top:0px;padding-bottom:0px;" v-on:click="toCart()">
+                <span class="mui-icon-extra mui-icon-extra-cart" style="font-size:25px;padding-bottom:0px;"></span><br />
                 <span style="font-size: 12px;">购物车</span>
             </button>
-            <button type="button" class="mui-btn" style="background-color: #f68c03; color:#fff;font-size: 25px; width:35%;height: 100%; top:0px;">
+            <button type="button" class="mui-btn" style="background-color: #f68c03; color:#fff;font-size: 25px; width:35%;height: 100%; top:0px;" v-on:click="openAddCart()">
                 <span class="iconfont icon-kanjiax" style="font-size: 20px;"></span>
                 <span style="font-size: 16px;">加入购物车</span>
             </button>
@@ -167,6 +300,7 @@
         </nav>
         <!--底部的工具条结束-->
     </div>
+
 </body>
     <script src="js/mui.js"></script>
     <script src="js/vue.min.js"></script>
@@ -181,7 +315,8 @@
                     product: {
                         
                     },
-                    isLoading: true
+                    isLoading: true,
+                    addCartNumb: 1
                 },
                 methods: {
                     addProduct: function () {
@@ -190,8 +325,35 @@
                         }, function (res) {
                             if (res.status == 401) {
                                 mui.toast("请先登录再购买");
+                            } else {
+                                mui.toast(res.body);
                             }
                         })
+                    },
+                    openAddCart: function () {
+                        mui('#buy-item-list').popover('toggle');
+                    },
+                    addCart: function () {
+                        this.$http.put("/api/shopcart", {
+                            productId: this.product.id,
+                            numb: this.addCartNumb
+                        }).then(function (res) {
+                            mui.toast("加入购物车成功");
+                            this.openAddCart();
+                            this.addCartNumb = 1;
+                        }, function (res) {
+                            if (res.status == 401) {
+                                mui.toast("请先登录再购买");
+                            } else {
+                                mui.toast(res.body);
+                            }
+                        });
+                    },
+                    changeNumb: function (event) {
+                        this.addCartNumb = event.target.value;
+                    },
+                    toCart: function () {
+                        window.location.href = "/shopcart.html";
                     }
                 },
                 updated: function () {
@@ -199,6 +361,7 @@
                     slider.slider({
                         interval: 2000 //自动轮播周期，若为0则不自动播放，默认为0；
                     });
+                    mui('.mui-numbox').numbox();
                 },
                 mounted: function () {
                     var slider = mui(".mui-slider");
