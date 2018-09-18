@@ -23,12 +23,13 @@ namespace MyShop.Data
             modelBuilder.Entity<Product>().ToTable("Product");
             modelBuilder.Entity<Category>().ToTable("Category");
             modelBuilder.Entity<Image>().ToTable("Image");
-            modelBuilder.Entity<ProductDescription>().ToTable("ProductDescription");
-            modelBuilder.Entity<ProductTitleImage>().ToTable("ProductTitleImage");
-            modelBuilder.Entity<ProductInfoImage>().ToTable("ProductInfoImage");
+            modelBuilder.Entity<ProductDescription>().ToTable("Product_Description");
+            modelBuilder.Entity<ProductTitleImage>().ToTable("Product_TitleImage");
+            modelBuilder.Entity<ProductInfoImage>().ToTable("Product_InfoImage");
             modelBuilder.Entity<ShopCart>().ToTable("ShopCart");
-            modelBuilder.Entity<ShopCartItem>().ToTable("ShopCartItem");
-            modelBuilder.Entity<UserProductCollection>().ToTable("UserProductCollection");
+            modelBuilder.Entity<ShopCartItem>().ToTable("ShopCart_Item");
+            modelBuilder.Entity<UserProductCollection>().ToTable("User_ProductCollection");
+            modelBuilder.Entity<UserAddress>().ToTable("User_Address");
 
             modelBuilder.Entity<ProductTitleImage>().HasKey(p => new { p.ImageId, p.ProductId });
 
@@ -84,6 +85,8 @@ namespace MyShop.Data
         public DbSet<ShopCartItem> ShopCartItems { get; set; }
 
         public DbSet<UserProductCollection> UserProductCollections { get; set; }
+
+        public DbSet<UserAddress> UserAddresses { get; set; }
 
     }
 }

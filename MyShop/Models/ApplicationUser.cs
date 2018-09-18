@@ -8,6 +8,7 @@ namespace MyShop.Models
 {
     public class ApplicationUser : IdentityUser<Guid>
     {
+        public ICollection<UserAddress> UserAddresses { get; set; }
         public ICollection<UserProductCollection> UserProductCollections { get; set; }
     }
 }

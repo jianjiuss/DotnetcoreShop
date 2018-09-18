@@ -1,0 +1,128 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MyShop.Data;
+using MyShop.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace MyShop.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    [Authorize]
+    public class UserAddressController :ControllerBase
+    {
+        private readonly UserManager<ApplicationUser> _usermanager;
+        private readonly MyDbContext _dbContext;
+
+        public UserAddressController(
+            UserManager<ApplicationUser> userManager,
+            MyDbContext dbContext)
+        {
+            _usermanager = userManager;
+            _dbContext = dbContext;
+        }
+
+        [HttpGet("{id?}")]
+        public async Task<IActionResult> GetAsync(int? id)
+        {
+            var user = await GetUserAndLoadAddressAsync();
+
+            if(id.HasValue)
+            {
+                var address = user.UserAddresses.FirstOrDefault(a => a.Id == id);
+                if(address != null)
+                {
+                    return Ok(address);
+                }
+                else
+                {
+                    return NotFound("没有找到该用户地址信息");
+                }
+            }
+            else
+            {
+                return Ok(user.UserAddresses);
+            }
+        }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> EditAsync(int id, [FromBody] UserAddress editAddressJson)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.First().Value.Errors.First().ErrorMessage);
+            }
+                
+            var user = await GetUserAndLoadAddressAsync();
+
+            var address = user.UserAddresses.FirstOrDefault(a => a.Id == id);
+            if(address == null)
+            {
+                return NotFound("没有找到该用户地址信息");
+            }
+
+            _dbContext.Entry(address).State = EntityState.Detached;
+            editAddressJson.Id = address.Id;
+            editAddressJson.UserId = address.UserId;
+            _dbContext.Entry(editAddressJson).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> AddAsync([FromBody] UserAddress addAddressJson)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.First().Value.Errors.First().ErrorMessage);
+            }
+
+            var userId = _usermanager.GetUserId(User);
+            addAddressJson.UserId = Guid.Parse(userId);
+            await _dbContext.UserAddresses.AddAsync(addAddressJson);
+            await _dbContext.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoveAsync(int id)
+        {
+            var user = await GetUserAndLoadAddressAsync();
+            var address = user.UserAddresses.FirstOrDefault(a => a.Id == id);
+            if(address == null)
+            {
+                return NotFound("没有该用户地址信息");
+            }
+
+            _dbContext.UserAddresses.Remove(address);
+            await _dbContext.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        private async Task<ApplicationUser> GetUserAndLoadAddressAsync()
+        {
+            var user = await _usermanager.GetUserAsync(User);
+            await _dbContext.Entry<ApplicationUser>(user)
+                .Collection(u => u.UserAddresses)
+                .LoadAsync();
+            return user;
+        }
+
+        public class AddressJson
+        {
+            public string AddressArea { get; set; }
+            public string AddressDetail { get; set; }
+            public string PostalCode { get; set; }
+            public string Phone { get; set; }
+            public string Name { get; set; }
+        }
+    }
+}
