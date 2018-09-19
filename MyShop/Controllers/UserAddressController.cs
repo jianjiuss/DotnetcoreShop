@@ -66,6 +66,17 @@ namespace MyShop.Controllers
                 return NotFound("没有找到该用户地址信息");
             }
 
+            if(editAddressJson.IsDefault)
+            {
+                foreach(var item in user.UserAddresses)
+                {
+                    if(item.Id != editAddressJson.Id)
+                    {
+                        item.IsDefault = false;
+                    }
+                }
+            }
+
             _dbContext.Entry(address).State = EntityState.Detached;
             editAddressJson.Id = address.Id;
             editAddressJson.UserId = address.UserId;
@@ -83,8 +94,13 @@ namespace MyShop.Controllers
                 return BadRequest(ModelState.First().Value.Errors.First().ErrorMessage);
             }
 
-            var userId = _usermanager.GetUserId(User);
-            addAddressJson.UserId = Guid.Parse(userId);
+            var user = await GetUserAndLoadAddressAsync();
+
+            if(user.UserAddresses.Count == 0)
+            {
+                addAddressJson.IsDefault = true;
+            }
+            addAddressJson.User = user;
             await _dbContext.UserAddresses.AddAsync(addAddressJson);
             await _dbContext.SaveChangesAsync();
 
@@ -114,15 +130,6 @@ namespace MyShop.Controllers
                 .Collection(u => u.UserAddresses)
                 .LoadAsync();
             return user;
-        }
-
-        public class AddressJson
-        {
-            public string AddressArea { get; set; }
-            public string AddressDetail { get; set; }
-            public string PostalCode { get; set; }
-            public string Phone { get; set; }
-            public string Name { get; set; }
         }
     }
 }

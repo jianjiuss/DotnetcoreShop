@@ -19,45 +19,39 @@
         <div class="mui-content-padded" style="margin: 5px;">
             <form class="mui-input-group">
                 <div class="mui-input-row">
-                    <label>用户名</label>
-                    <input type="text" v-bind:value="userInfo.name" placeholder="普通输入框" disabled>
-                </div>
-                <div class="mui-input-row mui-radio" style="display: inline-block;">
-                    <label>性别</label>
-                </div>
-                <div class="mui-input-row mui-radio mui-left mui-col-xs-4" style="display: inline-block;">
-                    <label>男</label>
-                    <input name="radio1" type="radio" value="male" v-model="userInfo.gender">
-                </div>
-                <div class="mui-input-row mui-radio mui-left mui-col-xs-4" style="display: inline-block;">
-                    <label>女</label>
-                    <input name="radio1" type="radio" value="female" v-model="userInfo.gender">
+                    <label>姓名</label>
+                    <input type="text" placeholder="收货人姓名" v-model="address.name">
                 </div>
                 <div class="mui-input-row">
-                    <label>年龄</label>
-                    <input type="text" placeholder="输入年龄" 
-                           v-model="userInfo.age"
+                    <label>手机号码</label>
+                    <input type="text" class="mui-input-clear" placeholder="输入手机号码"
+                           v-model="address.phone"
+                           ime-mode:disabled
+                           onkeydown="if(event.keyCode==13)event.keyCode=9"
+                           onKeypress="if ((event.keyCode<48 || event.keyCode>57)) event.returnValue=false">
+                </div>
+
+                <div class="mui-input-row">
+                    <label>所在地区</label>
+                    <input type="text" v-model="address.addressArea" v-on:click="showPicker" placeholder="点击选择地区" id='showCityPicker3' readonly="readonly">
+                </div>
+                <div class="mui-input-row">
+                    <label>邮政编码</label>
+                    <input type="text" placeholder="邮政编码"
+                           v-model="address.postalCode"
                            ime-mode:disabled
                            onkeydown="if(event.keyCode==13)event.keyCode=9"
                            onKeypress="if((event.keyCode<48 || event.keyCode>57)) event.returnValue=false">
                 </div>
                 <div class="mui-input-row">
-                    <label>所在地区</label>
-                    <input type="text" 
-                           v-model="userInfo.locality"
-                           v-on:click="showPicker"
-                           placeholder="点击选择地区" 
-                           id='showCityPicker3' 
-                           readonly="readonly">
-                </div>
-                <div class="mui-input-row">
-                    <label>手机号码</label>
-                    <input type="text" class="mui-input-clear" placeholder="输入手机号码"
-                           v-model="userInfo.phone"
+                    <label>详细地址</label>
+                    <input type="text" placeholder="输入详细地址"
+                           v-model="address.addressDetail"
                            ime-mode:disabled
                            onkeydown="if(event.keyCode==13)event.keyCode=9"
-                           onKeypress="if ((event.keyCode<48 || event.keyCode>57)) event.returnValue=false">
+                           onKeypress="if((event.keyCode<48 || event.keyCode>57)) event.returnValue=false">
                 </div>
+
                 <div class="mui-button-row">
                     <button type="button" class="mui-btn mui-btn-primary" v-on:click="commit">确认</button>&nbsp;&nbsp;
                     <button type="button" class="mui-btn mui-btn-danger mui-action-back" onclick="return false;">取消</button>
@@ -69,36 +63,41 @@
     <script src="js/mui.picker.js"></script>
     <script src="js/mui.poppicker.js"></script>
     <script src="js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/common.js"></script>
     <script src="js/vue.min.js"></script>
     <script src="js/vue-resource_1.5.1_vue-resource.min.js"></script>
-    <script src="js/common.js"></script>
-    <script type="text/javascript">
+    <script>
         var vm;
         appendWindowOnload(function () {
             vm = new Vue({
                 el: '#content',
                 data: {
-                    userInfo: {
+                    address: {
+                        id: "",
+                        addressArea: "",
+                        addressDetail: "",
+                        postalCode: "",
+                        phone: "",
                         name: "",
-                        age: "",
-                        gender: "",
-                        locality: "",
-                        phone: ""
+                        isDefault: false
                     }
                 },
                 methods: {
                     commit: function () {
-                        this.$http.post("/api/user/info", this.userInfo).then(function () {
-                            window.location.href = "/user-setting.html";
-                        }, function (res) {
-                            mui.toast(res.body);
-                        });
+                        if (id) {
+                            this.$http.post("/api/useraddress/" + id, this.address).then(function (res) {
+                                window.location.href = "/user-addresses.html";
+                            });
+                        } else {
+                            this.$http.put("/api/useraddress", this.address).then(function (res) {
+                                window.location.href = "/user-addresses.html";
+                            });
+                        }
                     },
                     showPicker: function () {
                         cityPicker3.show(function (items) {
-                            vm.userInfo.locality = _getParam(items[0], 'text') + " " + _getParam(items[1], 'text') + " " + _getParam(items[2], 'text');
-                            //返回 false 可以阻止选择框的关闭
-                            //return false;
+                            vm.address.addressArea = _getParam(items[0], 'text') + " " + _getParam(items[1], 'text') + " " + _getParam(items[2], 'text');
+                            document.getElementById("showCityPicker3").value = vm.address.addressArea;
                         });
                     }
                 },
@@ -107,15 +106,12 @@
                 }
             });
 
-            Vue.http.get("/api/user").then(function (res) {
-                vm.userInfo = res.body;
-            }, function (res) {
-                if (res.status == 401) {
-                    window.location.href = "/login.html";
-                } else {
-                    mui.toast(res.body);
-                }
-            });
+            var id = getQueryVariable("id");
+            if (id) {
+                Vue.http.get("/api/useraddress/" + id).then(function (res) {
+                    vm.address = res.body;
+                });
+            }
         });
 
         var _getParam = function (obj, param) {
