@@ -15,6 +15,11 @@
     <link href="css/mui.poppicker.css" rel="stylesheet" />
 </head>
 <body>
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-back mui-pull-left" href="/user-setting.html"></a>
+        <h1 class="mui-title">用户信息</h1>
+    </header>
+
     <div class="mui-content" id="content">
         <div class="mui-content-padded" style="margin: 5px;">
             <form class="mui-input-group">
@@ -35,7 +40,7 @@
                 </div>
                 <div class="mui-input-row">
                     <label>年龄</label>
-                    <input type="text" placeholder="输入年龄" 
+                    <input type="text" placeholder="输入年龄"
                            v-model="userInfo.age"
                            ime-mode:disabled
                            onkeydown="if(event.keyCode==13)event.keyCode=9"
@@ -43,11 +48,11 @@
                 </div>
                 <div class="mui-input-row">
                     <label>所在地区</label>
-                    <input type="text" 
+                    <input type="text"
                            v-model="userInfo.locality"
                            v-on:click="showPicker"
-                           placeholder="点击选择地区" 
-                           id='showCityPicker3' 
+                           placeholder="点击选择地区"
+                           id='showCityPicker3'
                            readonly="readonly">
                 </div>
                 <div class="mui-input-row">

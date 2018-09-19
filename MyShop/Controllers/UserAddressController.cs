@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using MyShop.Data;
 using MyShop.Models;
@@ -55,7 +56,8 @@ namespace MyShop.Controllers
         {
             if(!ModelState.IsValid)
             {
-                return BadRequest(ModelState.First().Value.Errors.First().ErrorMessage);
+                var errorMessage = ModelState.First(s => s.Value.ValidationState == ModelValidationState.Invalid).Value.Errors.First().ErrorMessage;
+                return BadRequest(errorMessage);
             }
                 
             var user = await GetUserAndLoadAddressAsync();

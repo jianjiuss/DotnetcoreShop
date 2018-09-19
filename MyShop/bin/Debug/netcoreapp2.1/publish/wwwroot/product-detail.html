@@ -364,11 +364,23 @@
                         if (this.isCollected) {
                             this.$http.delete("/api/usercollection/" + this.product.id).then(function () {
                                 this.isCollected = false;
-                            })
+                            }, function (res) {
+                                if (res.status == 401) {
+                                    mui.toast("请先登录再收藏");
+                                } else {
+                                    mui.toast(res.body);
+                                }
+                            });
                         } else {
                             this.$http.put("/api/usercollection/" + this.product.id).then(function () {
                                 this.isCollected = true;
-                            })
+                            }, function (res) {
+                                if (res.status == 401) {
+                                    mui.toast("请先登录再收藏");
+                                } else {
+                                    mui.toast(res.body);
+                                }
+                            });
                         }
                     }
                 },

@@ -115,14 +115,14 @@
         <div class="mui-content-padded">
             <button id='login' class="mui-btn mui-btn-block mui-btn-primary" v-on:click="login()">登录</button>
             <div class="link-area">
-                <a id='reg'>注册账号</a> <span class="spliter">|</span> <a id='forgetPassword'>忘记密码</a>
+                <a id='reg' href="register.html">注册账号</a> <span class="spliter"><!--|</span> <a id='forgetPassword'>忘记密码</a>-->
             </div>
         </div>
         <div class="mui-content-padded oauth-area">
 
         </div>
     </div>
-    <script src="js/mui.min.js"></script>
+    <script src="js/mui.js"></script>
     <script src="js/vue.min.js"></script>
     <script src="js/vue-resource_1.5.1_vue-resource.min.js"></script>
     <script src="js/common.js"></script>
@@ -147,6 +147,8 @@
                     }
                 }
             });
+            
+            mui('.mui-switch')['switch']();
         })
     </script>
 </body>

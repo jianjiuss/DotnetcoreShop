@@ -19,6 +19,7 @@ namespace MyShop.Models
         [Required(ErrorMessage = "邮政编码是必须的")]
         public string PostalCode { get; set; }
         [Required(ErrorMessage = "手机号码是必须的")]
+        [RegularExpression("^[1][3,4,5,7,8][0-9]{9}$", ErrorMessage = "请填写正确的手机号码")]
         public string Phone { get; set; }
         [Required(ErrorMessage = "收货人姓名是必须的")]
         public string Name { get; set; }

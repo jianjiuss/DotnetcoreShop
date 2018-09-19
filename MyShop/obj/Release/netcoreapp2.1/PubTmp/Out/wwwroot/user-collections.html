@@ -20,6 +20,11 @@
     </style>
 </head>
 <body>
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-back mui-pull-left" href="/user-setting.html"></a>
+        <h1 class="mui-title">用户收藏</h1>
+    </header>
+
     <div class="mui-content" id="content">
         <div class="title">
             用户商品收藏夹
@@ -51,7 +56,7 @@
     <script src="js/common.js"></script>
     <script>
         appendWindowOnload(function () {
-            
+
             var vm = new Vue({
                 el: '#content',
                 data: {
@@ -74,7 +79,7 @@
                             this.products.splice(removeItemIndex, 1);
                             mui.toast("移除成功");
                         }, function (res) {
-                            mui.toast(res.body); 
+                            mui.toast(res.body);
                             var removeItemIndex;
                             for (var i = 0; i < this.products.length; i++) {
                                 var item = this.products[i];

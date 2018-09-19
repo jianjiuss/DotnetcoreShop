@@ -87,10 +87,14 @@
                         if (id) {
                             this.$http.post("/api/useraddress/" + id, this.address).then(function (res) {
                                 window.location.href = "/user-addresses.html";
+                            }, function (res) {
+                                mui.toast(res.body);
                             });
                         } else {
                             this.$http.put("/api/useraddress", this.address).then(function (res) {
                                 window.location.href = "/user-addresses.html";
+                            }, function (res) {
+                                mui.toast(res.body);
                             });
                         }
                     },

@@ -151,10 +151,12 @@ namespace MyShop.Controllers
         {
             [Required]
             public string Gender { get; set; }
+            [Range(10, 99, ErrorMessage = "请输入正确的年龄")]
             public string Age { get; set; }
             [Required(ErrorMessage ="地区是必须的")]
             public string Locality { get; set; }
             [Required(ErrorMessage ="手机号码是必须的")]
+            [RegularExpression("^[1][3,4,5,7,8][0-9]{9}$", ErrorMessage = "请填写正确的手机号码")]
             public string Phone { get; set; }
         }
     }
