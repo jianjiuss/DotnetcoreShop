@@ -6711,7 +6711,7 @@ Function.prototype.bind = Function.prototype.bind || function(to) {
 		return switchApis.length > 1 ? switchApis : switchApis[0];
 	};
 	$.ready(function() {
-		$('.' + CLASS_SWITCH)['switch']();
+		//$('.' + CLASS_SWITCH)['switch']();
 	});
 })(mui, window, 'toggle');
 /**
