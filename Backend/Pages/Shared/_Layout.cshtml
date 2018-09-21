@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Backend</title>
+    <title>@ViewData["Title"] - 管理</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -30,9 +30,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-page="/Index">Home</a></li>
-                    <li><a asp-page="/About">About</a></li>
-                    <li><a asp-page="/Contact">Contact</a></li>
+                    <li><a asp-page="/Index">主页</a></li>
+                    <li><a asp-page="/About">关于</a></li>
+                    <li><a asp-page="/Contact">联系</a></li>
+                    <li><a asp-page="/Categories/Index">类型编辑</a></li>
                 </ul>
             </div>
         </div>

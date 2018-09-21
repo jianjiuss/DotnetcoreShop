@@ -24,6 +24,10 @@ services:
   backend:
     container_name: shop.backend
     build: ./Backend
+    depends_on:
+      - db
+    links:
+      - db
 
   sss:
     container_name: shop.sss

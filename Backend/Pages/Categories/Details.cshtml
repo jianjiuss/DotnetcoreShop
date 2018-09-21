@@ -1,0 +1,38 @@
+﻿@page
+@model Backend.Pages.Categories.DetailsModel
+
+@{
+    ViewData["Title"] = "详情";
+}
+
+<h2>详情</h2>
+
+<div>
+    <h4>类型</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Category.Name)
+        </dd>
+        <dt>
+            上级类型
+        </dt>
+        <dd>
+            @if(Model.Category.ParentCategory != null)
+            {
+                @Html.DisplayFor(model => model.Category.ParentCategory.Name)
+            }
+            else
+            {
+                <span>无</span>
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Category.Id">修改</a> |
+    <a asp-page="./Index">返回列表</a>
+</div>
