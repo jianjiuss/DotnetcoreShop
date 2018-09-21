@@ -1,0 +1,14 @@
+C:\Users\hbox029\Source\Repos\MyShop\StorageService\bin\Debug\netcoreapp2.1\StorageService.deps.json
+C:\Users\hbox029\Source\Repos\MyShop\StorageService\bin\Debug\netcoreapp2.1\StorageService.runtimeconfig.json
+C:\Users\hbox029\Source\Repos\MyShop\StorageService\bin\Debug\netcoreapp2.1\StorageService.runtimeconfig.dev.json
+C:\Users\hbox029\Source\Repos\MyShop\StorageService\bin\Debug\netcoreapp2.1\StorageService.dll
+C:\Users\hbox029\Source\Repos\MyShop\StorageService\bin\Debug\netcoreapp2.1\StorageService.pdb
+C:\Users\hbox029\Source\Repos\MyShop\StorageService\obj\Debug\netcoreapp2.1\StorageService.csprojAssemblyReference.cache
+C:\Users\hbox029\Source\Repos\MyShop\StorageService\obj\Debug\netcoreapp2.1\StorageService.csproj.CoreCompileInputs.cache
+C:\Users\hbox029\Source\Repos\MyShop\StorageService\obj\Debug\netcoreapp2.1\StorageService.RazorAssemblyInfo.cache
+C:\Users\hbox029\Source\Repos\MyShop\StorageService\obj\Debug\netcoreapp2.1\StorageService.RazorAssemblyInfo.cs
+C:\Users\hbox029\Source\Repos\MyShop\StorageService\obj\Debug\netcoreapp2.1\StorageService.AssemblyInfoInputs.cache
+C:\Users\hbox029\Source\Repos\MyShop\StorageService\obj\Debug\netcoreapp2.1\StorageService.AssemblyInfo.cs
+C:\Users\hbox029\Source\Repos\MyShop\StorageService\obj\Debug\netcoreapp2.1\StorageService.RazorTargetAssemblyInfo.cache
+C:\Users\hbox029\Source\Repos\MyShop\StorageService\obj\Debug\netcoreapp2.1\StorageService.dll
+C:\Users\hbox029\Source\Repos\MyShop\StorageService\obj\Debug\netcoreapp2.1\StorageService.pdb

@@ -5,8 +5,13 @@ services:
     image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: 123456
+    restart: always
+    ports:
+    - "3307:3306"
     volumes:
-      - ./mysql:/var/lib/mysql
+      - ./MySql/Data:/var/lib/mysql
+      - ./MySql/Config/my.cnf:/etc/my.cnf
+      - ./MySql/Init:/docker-entrypoint-initdb.d/
 
   web:
     container_name: shop.web
@@ -15,6 +20,14 @@ services:
       - db
     links:
       - db
+
+  backend:
+    container_name: shop.backend
+    build: ./Backend
+
+  sss:
+    container_name: shop.sss
+    build: ./StorageService
   
   reverse-proxy:
     container_name: shop.proxy
