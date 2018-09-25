@@ -9,7 +9,12 @@ namespace MyShop.Models
     public class Image
     {
         public int Id { get; set; }
-        public string ImageUrl { get; set; }
+
+        public string ImageUri{ get; set; }
+
+        public string Server { get; set; } = Util.ServiceLocation.ImageService;
+
+        public string ImageUrl { get { return Server + ImageUri; } }
 
         [JsonIgnore]
         public ICollection<ProductTitleImage> ProductTitleImages { get; set; }
