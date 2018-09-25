@@ -21,7 +21,7 @@ namespace Backend.Pages.Categories
 
         public IActionResult OnGet()
         {
-            var categories = _context.Categories.Where(c => c.ParentId == null).ToList();
+            var categories = _context.Categories.Where(c => c.ParentId == null && !c.Name.Equals("未分类")).ToList();
             categories.Insert(0, new Category() { Id = -1, Name = string.Empty });
             ViewData["ParentId"] = new SelectList(categories, "Id", "Name");
             return Page();

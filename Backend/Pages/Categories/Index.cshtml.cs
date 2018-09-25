@@ -13,18 +13,19 @@ namespace Backend.Pages.Categories
     public class IndexModel : PageModel
     {
         private readonly Backend.Data.MyDbContext _context;
+        private static readonly int pageSize = 5;
 
         public IndexModel(Backend.Data.MyDbContext context)
         {
             _context = context;
         }
 
-        public IList<Category> Category { get;set; }
+        public PaginatedList<Category> Category { get;set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int? pageIndex)
         {
-            Category = await _context.Categories
-                .Include(c => c.ParentCategory).ToListAsync();
+            Category = await PaginatedList<Category>.CreateAsync(
+                _context.Categories.Include(c => c.ParentCategory), pageIndex.HasValue ? pageIndex.Value : 1, pageSize);
         }
     }
 }

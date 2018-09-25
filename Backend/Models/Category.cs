@@ -15,6 +15,7 @@ namespace Backend.Models
         public int? ParentId { get; set; }
 
         [Display(Name="类型名称")]
+        [Required(ErrorMessage = "类型名称是必须的")]
         public string Name { get; set; }
 
         public Category ParentCategory { get; set; }

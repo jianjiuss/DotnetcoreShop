@@ -28,7 +28,8 @@ namespace MyShop.Data
                 new Category() { Name = "其它" },
                 new Category() { Name = "清洁用品" },
                 new Category() { Name = "文具" },
-                new Category() { Name = "洗发护发" }
+                new Category() { Name = "洗发护发" },
+                new Category() {Name = "未分类"}
             };
 
             categories[0].ChildCategorys = categories.GetRange(1, 4);
