@@ -15,6 +15,7 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    <script src="~/js/global_variable.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -35,6 +36,9 @@
                     <li><a asp-page="/Contact">联系</a></li>
                     <li><a asp-page="/Categories/Index">类型编辑</a></li>
                     <li><a asp-page="/Products/Index">商品编辑</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a asp-page="/Logout">@User.Identity.Name : 登出</a></li>
                 </ul>
             </div>
         </div>

@@ -14,7 +14,7 @@ namespace MyShop.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "customer")]
     public class ShopCartController : ControllerBase
     {
         private readonly MyDbContext _context;

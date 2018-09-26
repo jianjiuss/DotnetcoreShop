@@ -2,59 +2,78 @@
 @model Backend.Pages.Products.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "列表";
 }
 
-<h2>Index</h2>
+<h2>列表</h2>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">新增</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].IconImageUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].Store)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].Category)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Product) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IconImageUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Store)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product[0].Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product[0].Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product[0].IconImageUrl)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product[0].Store)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product[0].Category)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Product)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @{ var iconImageUrl = Util.GlobalVariable.ImageServer + item.IconImageUrl;}
+                        <img id="iconPreview" src="@iconImageUrl" class="img-thumbnail" style="width: 42px; height: 42px;">
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Store)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Name)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">修改</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">详情</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">删除</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+    @{
+        var prevDisabled = !Model.Product.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.Product.HasNextPage ? "disabled" : "";
+    }
+
+    <a asp-page="./Index"
+       asp-route-pageIndex="@(Model.Product.PageIndex - 1)"
+       class="btn btn-default @prevDisabled">
+        上一页
+    </a>
+    <a asp-page="./Index"
+       asp-route-pageIndex="@(Model.Product.PageIndex + 1)"
+       class="btn btn-default @nextDisabled">
+        下一页
+    </a>

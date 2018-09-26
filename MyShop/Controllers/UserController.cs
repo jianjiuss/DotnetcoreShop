@@ -32,7 +32,7 @@ namespace MyShop.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "customer")]
         public async Task<IActionResult> GetAsync()
         {
             var iuser = await _userManager.GetUserAsync(User);
@@ -55,7 +55,7 @@ namespace MyShop.Controllers
         }
 
         [HttpPost("info")]
-        [Authorize]
+        [Authorize(Roles = "customer")]
         public async Task<IActionResult> UpdateInfoAsync([FromBody] UpdateInfoJson infoJson)
         {
             if (!ModelState.IsValid)
@@ -90,13 +90,21 @@ namespace MyShop.Controllers
         [HttpPost]
         public async Task<IActionResult> LoginAsync([FromBody] UserLoginJson loginInfo)
         {
-            var result = await _signInManager.PasswordSignInAsync(loginInfo.Name, loginInfo.Password, false, false);
-            if(result.Succeeded)
+            //认证登录用户角色是否客人
+            var user = await _userManager.FindByNameAsync(loginInfo.Name);
+            if(!(await _userManager.GetClaimsAsync(user)).Any(c => c.Type == ClaimTypes.Role && c.Value == "customer"))
             {
-                return Ok();
+                return BadRequest("用户名或密码错误！");
             }
 
-            return BadRequest("用户名或密码错误！");
+            var result = await _signInManager.PasswordSignInAsync(loginInfo.Name, loginInfo.Password, false, false);
+            
+            if(!result.Succeeded)
+            {
+                return BadRequest("用户名或密码错误！");
+            }
+
+            return Ok();
         }
 
         [HttpPut]

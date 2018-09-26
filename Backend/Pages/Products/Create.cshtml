@@ -2,15 +2,33 @@
 @model Backend.Pages.Products.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "新增";
 }
 
-<h2>Create</h2>
+<h2>新增</h2>
 
-<h4>Product</h4>
+<h4>商品</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
+
+        <form id="uploadForm">
+            <div class="form-group">
+                <label asp-for="Product.IconImageUrl" class="control-label"></label>
+                <input type="file" name="file">
+                <input type="hidden" name="imageUseType" value="ProductIcon" />
+                <p class="help-block">上传商品列表中显示的缩略图。</p>
+            </div>
+            <div class="form-group">
+                <img id="iconPreview" class="img-thumbnail" style="width: 140px; height: 140px;">
+            </div>
+
+            <div class="form-group">
+                <input type="button" value="上传" onclick="doUpload()" class="btn btn-default" />
+            </div>
+
+        </form>
+
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -23,30 +41,49 @@
                 <input asp-for="Product.Price" class="form-control" />
                 <span asp-validation-for="Product.Price" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Product.IconImageUrl" class="control-label"></label>
-                <input asp-for="Product.IconImageUrl" class="form-control" />
-                <span asp-validation-for="Product.IconImageUrl" class="text-danger"></span>
-            </div>
+            <input asp-for="Product.IconImageUrl" type="hidden" id="iconImageInput"/>
             <div class="form-group">
                 <label asp-for="Product.Store" class="control-label"></label>
                 <input asp-for="Product.Store" class="form-control" />
                 <span asp-validation-for="Product.Store" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Product.CategoryId" class="control-label"></label>
-                <select asp-for="Product.CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+                <label class="control-label">分类</label>
+                <select asp-for="Product.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="新增" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="Index">返回列表</a>
 </div>
+
+<script>
+    var server = imageServer;
+     function doUpload() {
+        var formData = new FormData($("#uploadForm")[0]);
+        $.ajax({
+            url: server + '/file/uploadimage',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (returndata) {
+                $("#iconImageInput")[0].value = returndata.path;
+                $("#iconPreview")[0].src = server + returndata.path;
+            },
+            error: function (returndata) {
+                alert(returndata);
+            }
+        });
+    }
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

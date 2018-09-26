@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Backend.Data;
+using Backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,10 +34,26 @@ namespace Backend
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddEntityFrameworkStores<MyDbContext>();
+
+            services.ConfigureApplicationCookie(options => {
+                options.LoginPath = "/login";
+                options.AccessDeniedPath = "/login";
+                options.ReturnUrlParameter = "/index";
+            });
+
             services.AddDbContext<MyDbContext>(options =>
                     options.UseMySql(Configuration.GetConnectionString("MyDbContext")));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireRole("administrator")
+                    .RequireAuthenticatedUser()
+                    .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -49,6 +68,7 @@ namespace Backend
             }
 
             app.UseStaticFiles();
+            app.UseAuthentication();
             //app.UseCookiePolicy();
 
             app.UseMvc();

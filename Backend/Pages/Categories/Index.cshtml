@@ -10,6 +10,7 @@
 <p>
     <a asp-page="Create">新增</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -41,7 +42,6 @@
         }
     </tbody>
 </table>
-
 @{
     var prevDisabled = !Model.Category.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.Category.HasNextPage ? "disabled" : "";

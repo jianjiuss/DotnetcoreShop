@@ -19,12 +19,12 @@ namespace Backend.Pages.Products
             _context = context;
         }
 
-        public IList<Product> Product { get;set; }
+        public PaginatedList<Product> Product { get;set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int? pageIndex)
         {
-            Product = await _context.Products
-                .Include(p => p.Category).ToListAsync();
+            Product = await PaginatedList<Product>.CreateAsync( _context.Products
+                .Include(p => p.Category), pageIndex.HasValue ? pageIndex.Value : 1);
         }
     }
 }

@@ -10,11 +10,7 @@ namespace MyShop.Models
     {
         public int Id { get; set; }
 
-        public string ImageUri{ get; set; }
-
-        public string Server { get; set; } = Util.ServiceLocation.ImageService;
-
-        public string ImageUrl { get { return Server + ImageUri; } }
+        public string ImageUrl { get; set; }
 
         [JsonIgnore]
         public ICollection<ProductTitleImage> ProductTitleImages { get; set; }

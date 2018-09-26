@@ -40,11 +40,11 @@ namespace MyShop.Data
 
             List<Image> images = new List<Image>()
             {
-                new Image(){ImageUri = "/images/productTitle/cocacola_title.jpg"},
-                new Image(){ImageUri = "/images/productInfo/testImageInfo.png"},
-                new Image(){ImageUri = "/images/productInfo/testImageInfo.png"},
-                new Image(){ImageUri = "/images/productInfo/testImageInfo.png"},
-                new Image(){ImageUri = "/images/productInfo/testImageInfo.png"}
+                new Image(){ImageUrl = "/images/productTitle/cocacola_title.jpg"},
+                new Image(){ImageUrl = "/images/productInfo/testImageInfo.png"},
+                new Image(){ImageUrl = "/images/productInfo/testImageInfo.png"},
+                new Image(){ImageUrl = "/images/productInfo/testImageInfo.png"},
+                new Image(){ImageUrl = "/images/productInfo/testImageInfo.png"}
             };
             context.Images.AddRange(images);
             context.SaveChanges();
@@ -65,11 +65,6 @@ namespace MyShop.Data
                 new Product(){Name ="原子笔", Price = 2, Store = 0, IconImageUrl = "/images/productIcon/yuanzibi.png", Category = categories[10]},
                 new Product(){Name ="飘柔", Price = 15, Store = 10, IconImageUrl = "/images/productIcon/piaorou.png", Category = categories[11]}
             };
-
-            foreach(var item in products)
-            {
-                item.IconImageUrl = Util.ServiceLocation.ImageService + item.IconImageUrl;
-            }
 
             products[0].Descriptions = new List<ProductDescription>()
             {

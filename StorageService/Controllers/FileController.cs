@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,24 +14,25 @@ namespace StorageService.Controllers
         private string[] imageUseTypes = { "ProductIcon" , "ProductInfo", "ProductTitle", "UserHeadPhoto" };
 
         [HttpPost]
-        public async Task<IActionResult> UploadImage(IFormFile file, string imageUseType, string name)
+        
+        public async Task<IActionResult> UploadImage([FromForm]IFormFile file, string imageUseType, string name)
         {
             if (!file.ContentType.ToLower().Contains("image"))
             {
                 return BadRequest("不支持的类型");
             }
 
-            if(!imageUseTypes.Contains(imageUseType))
+            if (!imageUseTypes.Contains(imageUseType))
             {
                 return BadRequest("请指定好该图片用途");
             }
-            
+
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", imageUseType);
             string fileName = (string.IsNullOrEmpty(name) ? Guid.NewGuid().ToString() : name) + file.FileName.Substring(file.FileName.IndexOf('.'));
 
             string fullPath = Path.Combine(filePath, fileName);
 
-            if(System.IO.File.Exists(fullPath))
+            if (System.IO.File.Exists(fullPath))
             {
                 return BadRequest("该文件名字已经存在");
             }
@@ -42,14 +44,26 @@ namespace StorageService.Controllers
                     await file.CopyToAsync(stream);
                 }
             }
-
-            return Ok(new { path = "/Images/" + imageUseType + "/" + fileName});
+            return Ok(new { path = "/Images/" + imageUseType + "/" + fileName });
         }
 
         [HttpGet]
         public string Index()
         {
             return "Upload";
+        }
+
+
+        [HttpPost]
+        public string Test1(string name)
+        {
+            return "Test1";
+        }
+
+        [HttpPost]
+        public string Test2(string name)
+        {
+            return "Test2";
         }
     }
 }

@@ -13,7 +13,6 @@ namespace Backend.Pages.Categories
     public class IndexModel : PageModel
     {
         private readonly Backend.Data.MyDbContext _context;
-        private static readonly int pageSize = 5;
 
         public IndexModel(Backend.Data.MyDbContext context)
         {
@@ -25,7 +24,7 @@ namespace Backend.Pages.Categories
         public async Task OnGetAsync(int? pageIndex)
         {
             Category = await PaginatedList<Category>.CreateAsync(
-                _context.Categories.Include(c => c.ParentCategory), pageIndex.HasValue ? pageIndex.Value : 1, pageSize);
+                _context.Categories.Include(c => c.ParentCategory), pageIndex.HasValue ? pageIndex.Value : 1);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace MyShop.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    [Authorize(Roles = "customer")]
     public class UserAddressController :ControllerBase
     {
         private readonly UserManager<ApplicationUser> _usermanager;

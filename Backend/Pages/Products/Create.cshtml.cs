@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Backend.Data;
 using Backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Pages.Products
 {
@@ -21,7 +22,11 @@ namespace Backend.Pages.Products
 
         public IActionResult OnGet()
         {
-        ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
+            ViewData["CategoryId"] = new SelectList(
+                _context.Categories.Include(c => c.ParentCategory).Where(c => c.ParentCategory != null)
+                , "Id"
+                , "Name"
+                , null, "ParentCategory.Name");
             return Page();
         }
 
