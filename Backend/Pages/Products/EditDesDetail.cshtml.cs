@@ -43,7 +43,7 @@ namespace Backend.Pages.Products
             return Page();
         }
 
-        public async Task OnPostAsync()
+        public async Task OnPostAddAsync()
         {
             if(!ModelState.IsValid)
             {

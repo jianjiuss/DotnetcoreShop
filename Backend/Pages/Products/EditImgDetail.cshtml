@@ -1,8 +1,88 @@
 ﻿@page
 @model Backend.Pages.Products.EditImgDetailModel
 @{
-    ViewData["Title"] = "EditImgDetail";
+    ViewData["Title"] = "设置商品图片详情";
 }
 
-<h2>EditImgDetail</h2>
+<h2>设置商品图片详情</h2>
 
+<h4>商品</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form id="uploadForm">
+            <div class="form-group">
+                <label class="control-label">详情图片</label>
+                <input type="file" name="file">
+                <input type="hidden" name="imageUseType" value="ProductIcon" />
+                <p class="help-block">上传商品详情图片。</p>
+            </div>
+            <div class="form-group">
+                <img id="iconPreview" class="img-thumbnail" style="width: 140px; height: 140px;">
+            </div>
+
+            <div class="form-group">
+                <input type="button" value="上传" onclick="doUpload()" class="btn btn-default" />
+            </div>
+
+        </form>
+        <form method="post">
+            <input type="hidden" name="productId" value="@Model.Product.Id" />
+
+            <input type="hidden" asp-for="InfoImage.ImageUrl" id="iconImageInput" value="@string.Empty"/>
+            <div class="form-group">
+                <input type="submit" asp-page-handler="Add" value="添加" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-page="./Index">返回列表</a>
+</div>
+<hr />
+<h4>当前商品图片描述</h4>
+<div class="row">
+    <div class="col-xs-12 col-md-8" id="des-list">
+
+        @foreach (var image in Model.Product.InfoImages.OrderBy(i => i.ImageId))
+        {
+            <div class="row">
+                <div class="col-xs-10">
+                    @{ var imageUrl = Util.GlobalVariable.ImageServer + image.Image.ImageUrl;}
+                    <img src="@imageUrl" class="col-xs-12"/>
+                </div>
+
+                <div class="col-xs-2">
+                    <form method="post">
+                        <input type="hidden" name="imageId" value="@image.ImageId" />
+                        <input type="hidden" name="productId" value="@image.ProductId" />
+                        <input type="submit" class="btn btn-default" asp-page-handler="Remove" value="X" />
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    var server = "@Util.GlobalVariable.ImageServer";
+    function doUpload() {
+        var formData = new FormData($("#uploadForm")[0]);
+        $.ajax({
+            url: server + '/file/uploadimage',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (returndata) {
+                $("#iconImageInput")[0].value = returndata.path;
+                $("#iconPreview")[0].src = server + returndata.path;
+            },
+            error: function (returndata) {
+                alert(returndata);
+            }
+        });
+    }
+</script>
