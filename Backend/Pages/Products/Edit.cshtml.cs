@@ -37,7 +37,11 @@ namespace Backend.Pages.Products
             {
                 return NotFound();
             }
-           ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
+            ViewData["CategoryId"] = new SelectList(
+                 _context.Categories.Include(c => c.ParentCategory).Where(c => c.ParentCategory != null)
+                 , "Id"
+                 , "Name"
+                 , null, "ParentCategory.Name");
             return Page();
         }
 

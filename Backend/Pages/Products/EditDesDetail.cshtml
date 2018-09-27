@@ -1,0 +1,55 @@
+﻿@page
+@model Backend.Pages.Products.EditDesDetailModel
+@{
+    ViewData["Title"] = "设置商品文字详情";
+}
+
+<h2>设置商品文字详情</h2>
+
+<h4>商品</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <input type="hidden" asp-for="Des.ProductId" value="@Model.Product.Id" />
+
+            <div class="form-group">
+                <label class="control-label">描述标题</label>
+                <input asp-for="Des.Title" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">描述内容</label>
+                <input asp-for="Des.Content" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="添加" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-page="./Index">返回列表</a>
+</div>
+<hr />
+<h4>当前商品文字描述</h4>
+<div class="row">
+    <div class="col-md-4" id="des-list">
+
+        @foreach (var des in Model.Product.Descriptions.OrderBy(d => d.Id))
+        {
+            <div class="row">
+                <div class="col-xs-9">
+                    <strong>-@des.Title</strong><br>
+                    &nbsp; &nbsp; &nbsp; -@des.Content<br>
+                </div>
+                <div class="col-xs-3">
+                    <form method="post">
+                        <input type="hidden" name="id" value="@des.Id"/>
+                        <input type="submit" class="btn btn-default" asp-page-handler="Remove" value="X"/>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+</div>

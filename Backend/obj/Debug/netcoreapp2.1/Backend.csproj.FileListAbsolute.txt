@@ -42,3 +42,6 @@ C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages
 C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages\Products\Index.g.cshtml.cs
 C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages\Login.g.cshtml.cs
 C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages\Logout.g.cshtml.cs
+C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages\Products\EditDesDetail.g.cshtml.cs
+C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages\Products\EditImgDetail.g.cshtml.cs
+C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages\Products\EditSlideShow.g.cshtml.cs

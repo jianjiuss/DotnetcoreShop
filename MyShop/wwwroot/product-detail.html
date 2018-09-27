@@ -165,6 +165,7 @@
             color: red;
         }
     </style>
+    <script src="js/global_variable.js"></script>
 </head>
 <body>
     <div id="content">
@@ -178,14 +179,14 @@
                         <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
                         <div class="mui-slider-item mui-slider-item-duplicate">
                             <a href="#">
-                                <img v-bind:src="product.titleImages[product.titleImages.length - 1].image.imageUrl">
+                                <img v-bind:src="imageServer + product.titleImages[product.titleImages.length - 1].image.imageUrl">
                             </a>
                         </div>
 
                         <template v-for="titleImage in product.titleImages">
                             <div class="mui-slider-item">
                                 <a href="#">
-                                    <img v-bind:src="titleImage.image.imageUrl">
+                                    <img v-bind:src="imageServer + titleImage.image.imageUrl">
                                 </a>
                             </div>
                         </template>
@@ -193,7 +194,7 @@
                         <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
                         <div class="mui-slider-item mui-slider-item-duplicate">
                             <a href="#">
-                                <img v-bind:src="product.titleImages[0].image.imageUrl">
+                                <img v-bind:src="imageServer + product.titleImages[0].image.imageUrl">
                             </a>
                         </div>
                     </template>
@@ -228,7 +229,7 @@
             <div class="tab-container">
                 <!--<h6 class="del  ">图文详情</h6>-->
                 <div class="med-detail img-detail mui-control-content" id="imgDetail">
-                    <img style="width:100%;" v-for="infoImage in product.infoImages" v-bind:src="infoImage.image.imageUrl" />
+                    <img style="width:100%;" v-for="infoImage in product.infoImages" v-bind:src="imageServer + infoImage.image.imageUrl" />
                 </div>
                 <!-- <h6 class="del  ">基本信息</h6>-->
                 <div class="med-detail  mui-active mui-control-content med-detail1" id="medDetail">
@@ -258,7 +259,7 @@
             <h4 class="_title">请选择规格数量</h4>
             <div class="_product-img-container">
                 <div class="_product-img">
-                    <img v-bind:src="product.iconImageUrl">
+                    <img v-bind:src="imageServer + product.iconImageUrl">
                 </div>
                 <div class="_product-detail">
                     <h4 v-text="product.name"></h4>

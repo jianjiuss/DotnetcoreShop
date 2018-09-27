@@ -23,14 +23,29 @@ namespace Backend.Pages
         [BindProperty]
         public LoginInfo User { get; set; }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
-
+            if(_signInManager.IsSignedIn(HttpContext.User))
+            {
+                return RedirectToPage("./Index");
+            }
+            else
+            {
+                return Page();
+            }
         }
 
-        public async Task OnPostAsync()
+        public async Task<IActionResult> OnPostAsync()
         {
             var result = await _signInManager.PasswordSignInAsync(User.Username, User.Password, User.IsRemeber, lockoutOnFailure: true);
+            if(result.Succeeded)
+            {
+                return RedirectToPage("./Index");
+            }
+            else
+            {
+                return Page();
+            }
         }
 
         public class LoginInfo
