@@ -10,50 +10,51 @@
 <p>
     <a asp-page="Create">新增</a>
 </p>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Category[0].Name)
-            </th>
-            <th>
-                上级类型
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Category)
-        {
+<div class="table-responsive">
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ParentCategory.Name)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">修改</a> |
-                    <a asp-page="./Details" asp-route-id="@item.Id">详情</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">删除</a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category[0].Name)
+                </th>
+                <th>
+                    上级类型
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
-@{
-    var prevDisabled = !Model.Category.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.Category.HasNextPage ? "disabled" : "";
-}
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Category)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ParentCategory.Name)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">修改</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">详情</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">删除</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+    @{
+        var prevDisabled = !Model.Category.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.Category.HasNextPage ? "disabled" : "";
+    }
 
-<a asp-page="./Index"
-   asp-route-pageIndex="@(Model.Category.PageIndex - 1)"
-   class="btn btn-default @prevDisabled">
-    上一页
-</a>
-<a asp-page="./Index"
-   asp-route-pageIndex="@(Model.Category.PageIndex + 1)"
-   class="btn btn-default @nextDisabled">
-    下一页
-</a>
+    <a asp-page="./Index"
+       asp-route-pageIndex="@(Model.Category.PageIndex - 1)"
+       class="btn btn-default @prevDisabled">
+        上一页
+    </a>
+    <a asp-page="./Index"
+       asp-route-pageIndex="@(Model.Category.PageIndex + 1)"
+       class="btn btn-default @nextDisabled">
+        下一页
+    </a>

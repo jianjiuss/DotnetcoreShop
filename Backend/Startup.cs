@@ -41,7 +41,7 @@ namespace Backend
 
             services.ConfigureApplicationCookie(options => {
                 options.LoginPath = "/login";
-                options.AccessDeniedPath = "/login";
+                options.AccessDeniedPath = "/PermissionDenied";
                 options.ReturnUrlParameter = "/index";
             });
 

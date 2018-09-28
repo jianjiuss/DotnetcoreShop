@@ -47,7 +47,13 @@ namespace Backend.Pages.Products
                 return NotFound();
             }
 
-            Product = await _context.Products.FindAsync(id);
+            Product = await _context.Products
+                .Include(p => p.InfoImages)
+                .ThenInclude(i => i.Image)
+                .Include(p => p.TitleImages)
+                .ThenInclude(i => i.Image)
+                .Include(p => p.Descriptions)
+                .FirstOrDefaultAsync(p => p.Id == id);
 
             if (Product != null)
             {

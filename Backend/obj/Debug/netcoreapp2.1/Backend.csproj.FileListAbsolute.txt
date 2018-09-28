@@ -47,3 +47,6 @@ C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages
 C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages\Products\EditSlideShow.g.cshtml.cs
 C:\Users\hbox029\Source\Repos\MyShop\Backend\bin\Debug\netcoreapp2.1\Models.dll
 C:\Users\hbox029\Source\Repos\MyShop\Backend\bin\Debug\netcoreapp2.1\Models.pdb
+C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages\Users\Index.g.cshtml.cs
+C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages\PermissionDenied.g.cshtml.cs
+C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages\Products\Preview.g.cshtml.cs
