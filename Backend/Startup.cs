@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Backend.Data;
 using Backend.Models;
+using Backend.TimeJob;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -45,6 +46,10 @@ namespace Backend
 
             services.AddDbContext<MyDbContext>(options =>
                     options.UseMySql(Configuration.GetConnectionString("MyDbContext")));
+
+            services.AddHttpClient();
+
+            services.AddSingleton<DeleteImageJob>();
 
             services.AddMvc(config =>
             {

@@ -39,7 +39,7 @@ namespace StorageService
             app.UseCors("cors");
 
             app.UseStaticFiles();
-
+            
             app.UseMvc(options => {
                 options.MapRoute(
                     name: "default",

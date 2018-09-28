@@ -14,7 +14,7 @@
             <div class="form-group">
                 <label class="control-label">详情图片</label>
                 <input type="file" name="file">
-                <input type="hidden" name="imageUseType" value="ProductIcon" />
+                <input type="hidden" name="imageUseType" value="ProductInfo" />
                 <p class="help-block">上传商品详情图片。</p>
             </div>
             <div class="form-group">
@@ -76,6 +76,9 @@
             cache: false,
             contentType: false,
             processData: false,
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("token", "@Util.GlobalVariable.ImageServerToken");
+            },
             success: function (returndata) {
                 $("#iconImageInput")[0].value = returndata.path;
                 $("#iconPreview")[0].src = server + returndata.path;
