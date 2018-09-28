@@ -4371,6 +4371,16 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
+      },
+      "Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "compile": {
+          "bin/placeholder/Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Models.dll": {}
+        }
       }
     }
   },
@@ -11564,12 +11574,18 @@
         "system.xml.xpath.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xpath.xdocument.nuspec"
       ]
+    },
+    "Models/1.0.0": {
+      "type": "project",
+      "path": "../Models/Models.csproj",
+      "msbuildProject": "../Models/Models.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
       "Microsoft.AspNetCore.App >= 2.1.1",
       "Microsoft.NETCore.App >= 2.1.0",
+      "Models >= 1.0.0",
       "Pomelo.EntityFrameworkCore.MySql >= 2.1.1"
     ]
   },
@@ -11580,11 +11596,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\users\\hbox029\\Source\\Repos\\MyShop\\MyShop\\MyShop.csproj",
+      "projectUniqueName": "C:\\Users\\hbox029\\Source\\Repos\\MyShop\\MyShop\\MyShop.csproj",
       "projectName": "MyShop",
-      "projectPath": "c:\\users\\hbox029\\Source\\Repos\\MyShop\\MyShop\\MyShop.csproj",
+      "projectPath": "C:\\Users\\hbox029\\Source\\Repos\\MyShop\\MyShop\\MyShop.csproj",
       "packagesPath": "C:\\Users\\hbox029\\.nuget\\packages\\",
-      "outputPath": "c:\\users\\hbox029\\Source\\Repos\\MyShop\\MyShop\\obj\\",
+      "outputPath": "C:\\Users\\hbox029\\Source\\Repos\\MyShop\\MyShop\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -11602,7 +11618,11 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\hbox029\\Source\\Repos\\MyShop\\Models\\Models.csproj": {
+              "projectPath": "C:\\Users\\hbox029\\Source\\Repos\\MyShop\\Models\\Models.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

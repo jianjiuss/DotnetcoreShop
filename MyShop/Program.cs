@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MyShop.Data;
-using MyShop.Models;
+using Models;
 
 namespace MyShop
 {

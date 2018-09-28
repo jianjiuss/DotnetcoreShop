@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MyShop.Models;
+using Models;
 using MyShop.Util;
 using System;
 using System.Collections.Generic;

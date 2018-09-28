@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Backend.Data;
 using Backend.Models;
 using Microsoft.EntityFrameworkCore;
+using Models;
 
 namespace Backend.Pages.Products
 {

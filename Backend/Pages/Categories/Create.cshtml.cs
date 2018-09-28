@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Backend.Data;
-using Backend.Models;
+using Models;
 
 namespace Backend.Pages.Categories
 {

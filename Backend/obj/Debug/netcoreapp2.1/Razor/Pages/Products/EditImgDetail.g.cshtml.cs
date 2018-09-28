@@ -69,7 +69,7 @@ using Backend;
             WriteLiteral("\r\n<h2>设置商品图片详情</h2>\r\n\r\n<h4>商品</h4>\r\n<hr />\r\n<div class=\"row\">\r\n    <div class=\"col-md-4\">\r\n        ");
             EndContext();
             BeginContext(200, 655, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d89f17a722a54fc7878ae48001bf24aa", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2fe85652b65a41829cb7c098a35e9684", async() => {
                 BeginContext(222, 626, true);
                 WriteLiteral(@"
             <div class=""form-group"">
@@ -107,7 +107,7 @@ using Backend;
             WriteLiteral("\r\n        ");
             EndContext();
             BeginContext(865, 383, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1721e027ffa4489b95c618bce66168d5", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9d63ad93f24d41bbae3d1ddb1503c532", async() => {
                 BeginContext(885, 51, true);
                 WriteLiteral("\r\n            <input type=\"hidden\" name=\"productId\"");
                 EndContext();
@@ -122,7 +122,7 @@ WriteAttributeValue("", 944, Model.Product.Id, 944, 17, false);
                 WriteLiteral(" />\r\n\r\n            ");
                 EndContext();
                 BeginContext(981, 93, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "2263086fa4bd4adfbb7054da3b8ad5f8", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "007197268f644fc0aa6c484b916bff74", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.InputTagHelper>();
@@ -157,7 +157,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper.For = ModelExpressionProvid
                 WriteLiteral("\r\n            <div class=\"form-group\">\r\n                ");
                 EndContext();
                 BeginContext(1130, 81, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "aa8989fc3b7a464bab643c64403414d5", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "8ca936ccdeee4b4cbe16a2db862d7e35", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_FormActionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.FormActionTagHelper>();
@@ -198,7 +198,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper.For = ModelExpressionProvid
             WriteLiteral("\r\n    </div>\r\n</div>\r\n<div>\r\n    ");
             EndContext();
             BeginContext(1281, 30, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bc0987a699c44bcb83ea8127030001e1", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7c4cecc6ad2f454aadc0e981eb8c77a6", async() => {
                 BeginContext(1303, 4, true);
                 WriteLiteral("返回列表");
                 EndContext();
@@ -247,7 +247,7 @@ WriteAttributeValue("", 1712, imageUrl, 1712, 9, false);
             WriteLiteral(" class=\"col-xs-12\"/>\r\n                </div>\r\n\r\n                <div class=\"col-xs-2\">\r\n                    ");
             EndContext();
             BeginContext(1830, 336, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "43060359341947168d7c19def7cd3ba3", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0dbf7a6f982a4ff3841ad12a833bbac0", async() => {
                 BeginContext(1850, 61, true);
                 WriteLiteral("\r\n                        <input type=\"hidden\" name=\"imageId\"");
                 EndContext();
@@ -272,7 +272,7 @@ WriteAttributeValue("", 2008, image.ProductId, 2008, 16, false);
                 WriteLiteral(" />\r\n                        ");
                 EndContext();
                 BeginContext(2054, 83, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "d637a9f1b56c4f4d87d2bd09db10e349", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "371aeb90bf6a433f84ee08cfbadd52f6", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_FormActionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.FormActionTagHelper>();

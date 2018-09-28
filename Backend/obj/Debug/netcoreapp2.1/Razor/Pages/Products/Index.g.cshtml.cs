@@ -65,7 +65,7 @@ using Backend;
             WriteLiteral("\r\n<h2>列表</h2>\r\n\r\n<p>\r\n    ");
             EndContext();
             BeginContext(115, 27, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b03d617dc7b34d4b89c0fc7e5520749d", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f21cdcb2838a4d06abf16b869e7bf35e", async() => {
                 BeginContext(136, 2, true);
                 WriteLiteral("新增");
                 EndContext();
@@ -204,7 +204,7 @@ WriteAttributeValue("", 1438, iconImageUrl, 1438, 13, false);
             WriteLiteral("\r\n                    </td>\r\n                    <td>\r\n                        ");
             EndContext();
             BeginContext(1837, 51, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "54e05d4432924136b5b01a0d4c812049", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c0d239afa9a54067bc2e18be4727570a", async() => {
                 BeginContext(1882, 2, true);
                 WriteLiteral("修改");
                 EndContext();
@@ -239,7 +239,7 @@ WriteAttributeValue("", 1438, iconImageUrl, 1438, 13, false);
             WriteLiteral(" |\r\n                        ");
             EndContext();
             BeginContext(1916, 54, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dc458d62c8cc4d92ae2edfcaa4cd7f4f", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8b2c205139de41019e63e94838507607", async() => {
                 BeginContext(1964, 2, true);
                 WriteLiteral("详情");
                 EndContext();
@@ -274,7 +274,7 @@ WriteAttributeValue("", 1438, iconImageUrl, 1438, 13, false);
             WriteLiteral(" |\r\n                        ");
             EndContext();
             BeginContext(1998, 64, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "557948545389492d899e958a95824223", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "45944cd9acec4104b46cac800a32529b", async() => {
                 BeginContext(2052, 6, true);
                 WriteLiteral("设置文字详情");
                 EndContext();
@@ -309,7 +309,7 @@ WriteAttributeValue("", 1438, iconImageUrl, 1438, 13, false);
             WriteLiteral(" |\r\n                        ");
             EndContext();
             BeginContext(2090, 64, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a7e454881f654bbea8342442cd6b443b", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "369718d3396b4cf4833193c7070cc69e", async() => {
                 BeginContext(2144, 6, true);
                 WriteLiteral("设置图文详情");
                 EndContext();
@@ -344,7 +344,7 @@ WriteAttributeValue("", 1438, iconImageUrl, 1438, 13, false);
             WriteLiteral(" |\r\n                        ");
             EndContext();
             BeginContext(2182, 63, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5763e8d3933a45d2905baedaa48246f7", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "89670a33e9e441978406050677cdc7eb", async() => {
                 BeginContext(2236, 5, true);
                 WriteLiteral("设置轮播图");
                 EndContext();
@@ -379,7 +379,7 @@ WriteAttributeValue("", 1438, iconImageUrl, 1438, 13, false);
             WriteLiteral(" |\r\n                        ");
             EndContext();
             BeginContext(2273, 53, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6f93927d89ce4b288dc2d9c7c4f4a311", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "04dbad45471f4257888ba1db62e236c6", async() => {
                 BeginContext(2320, 2, true);
                 WriteLiteral("删除");
                 EndContext();
@@ -433,7 +433,7 @@ WriteAttributeValue("", 1438, iconImageUrl, 1438, 13, false);
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(2606, 152, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fd67f20bf88948fd9c463b6615e394d3", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1681409a4d564a509e59faeddcf69c32", async() => {
                 BeginContext(2735, 19, true);
                 WriteLiteral("\r\n        上一页\r\n    ");
                 EndContext();
@@ -477,7 +477,7 @@ AddHtmlAttributeValue(" ", 2719, prevDisabled, 2720, 13, false);
             WriteLiteral("\r\n    ");
             EndContext();
             BeginContext(2764, 152, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1a055ed091e54f5eab446bdbefeb11fe", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "de515870d8504eefb7aaf55d8d5e7f37", async() => {
                 BeginContext(2893, 19, true);
                 WriteLiteral("\r\n        下一页\r\n    ");
                 EndContext();

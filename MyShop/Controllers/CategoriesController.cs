@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyShop.Data;
-using MyShop.Models;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using MyShop.Models;
+using Models;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 
