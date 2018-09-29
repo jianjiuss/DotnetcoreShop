@@ -18,6 +18,7 @@
                 font-size: 15px;
             }
         </style>
+        <script src="js/global_variable.js"></script>
     </head>
 </head>
 <body>
@@ -31,7 +32,7 @@
             <template v-for="product in products">
                 <li class="mui-table-view-cell mui-media">
                     <a class="mui-navigate-right" v-on:click="toDetail(product.id)">
-                        <img class="mui-media-object mui-pull-left" src="/images/shopListIcon/cocacola.png" v-bind:src="product.iconImageUrl">
+                        <img class="mui-media-object mui-pull-left" v-bind:src="imageServer + product.iconImageUrl">
                         <div class="mui-media-body">
                             {{product.name}}
                             <p class='mui-ellipsis'>￥{{product.price}}</p>

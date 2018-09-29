@@ -26,6 +26,7 @@
         "dependencies": {
           "Microsoft.AspNetCore.App": "2.1.1",
           "Microsoft.NETCore.App": "2.1.0",
+          "Models": "1.0.0",
           "Pomelo.EntityFrameworkCore.MySql": "2.1.1"
         },
         "runtime": {
@@ -248,6 +249,14 @@
         },
         "compile": {
           "lib/netstandard1.3/Pomelo.JsonObject.dll": {}
+        }
+      },
+      "Models/1.0.0": {
+        "runtime": {
+          "Models.dll": {}
+        },
+        "compile": {
+          "Models.dll": {}
         }
       },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
@@ -3270,6 +3279,11 @@
       "sha512": "sha512-erkYG/OW1LloSwDFGeS9MvVjy1FLmaV3k8GK/GMR8D3sSDEylZogoLdLiaOFc92+zTen92rG6XGiioNacSlg0A==",
       "path": "pomelo.jsonobject/1.1.1",
       "hashPath": "pomelo.jsonobject.1.1.1.nupkg.sha512"
+    },
+    "Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "type": "package",

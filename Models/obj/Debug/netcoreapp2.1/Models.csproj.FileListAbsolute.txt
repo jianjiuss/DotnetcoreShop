@@ -11,4 +11,3 @@ C:\Users\hbox029\Source\Repos\MyShop\Models\bin\Debug\netcoreapp2.1\Newtonsoft.J
 C:\Users\hbox029\Source\Repos\MyShop\Models\obj\Debug\netcoreapp2.1\Models.csproj.CopyComplete
 C:\Users\hbox029\Source\Repos\MyShop\Models\obj\Debug\netcoreapp2.1\Models.dll
 C:\Users\hbox029\Source\Repos\MyShop\Models\obj\Debug\netcoreapp2.1\Models.pdb
-C:\Users\hbox029\Source\Repos\MyShop\Models\obj\Debug\netcoreapp2.1\Models.csprojAssemblyReference.cache

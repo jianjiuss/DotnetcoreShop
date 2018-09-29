@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Models;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
+using System.Security.Claims;
 
 namespace MyShop.Controllers
 {
