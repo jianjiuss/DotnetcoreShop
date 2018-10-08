@@ -1,6 +1,7 @@
 ﻿FROM microsoft/dotnet:latest
 WORKDIR /app/backend
-COPY . /app/backend
+COPY ./Backend /app/backend
+COPY ./Models /app/Models
 RUN dotnet restore
 EXPOSE 5001
 ENV ASPNETCORE_URLS http://*:5001

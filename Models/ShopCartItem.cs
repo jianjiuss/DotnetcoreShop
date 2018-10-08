@@ -15,7 +15,7 @@ namespace Models
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
         public Product Product { get; set; }
-        public int ShopCartId { get; set; }
+        public Guid ShopCartId { get; set; }
         [JsonIgnore]
         [ForeignKey("ShopCartId")]
         public ShopCart ShopCart { get; set; }

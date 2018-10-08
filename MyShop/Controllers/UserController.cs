@@ -120,6 +120,7 @@ namespace MyShop.Controllers
             if (result.Succeeded)
             {
                 await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Gender, "male"));
+                await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "customer"));
                 return Ok();
             }
             else

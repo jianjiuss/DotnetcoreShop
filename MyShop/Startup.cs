@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyShop.Data;
 using Models;
+using MyShop.Controllers;
 
 namespace MyShop
 {

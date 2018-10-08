@@ -15,7 +15,9 @@ services:
 
   web:
     container_name: shop.web
-    build: ./MyShop
+    build: 
+      context: .
+      dockerfile: ./MyShop/Dockerfile
     depends_on:
       - db
     links:
@@ -23,7 +25,9 @@ services:
 
   backend:
     container_name: shop.backend
-    build: ./Backend
+    build:
+      context: .
+      dockerfile: ./Backend/Dockerfile
     depends_on:
       - db
     links:
