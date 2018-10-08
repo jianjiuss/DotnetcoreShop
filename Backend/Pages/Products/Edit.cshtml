@@ -77,6 +77,9 @@
             cache: false,
             contentType: false,
             processData: false,
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("token", "@Util.GlobalVariable.ImageServerToken");
+            },
             success: function (returndata) {
                 $("#iconImageInput")[0].value = returndata.path;
                 $("#iconPreview")[0].src = server + returndata.path;
