@@ -18,8 +18,8 @@ namespace Backend
         {
             var host = CreateWebHostBuilder(args).Build();
 
-            var job = host.Services.GetRequiredService<DeleteImageJob>();
-            job.Start(host.Services);
+            //var job = host.Services.GetRequiredService<DeleteImageJob>();
+            //job.Start(host.Services);
 
             host.Run();
         }
