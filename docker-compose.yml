@@ -1,37 +1,17 @@
 version: '2'
 services:
-  db:
-    container_name: shop.db
-    image: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: 123456
-    restart: always
-    ports:
-    - "3307:3306"
-    volumes:
-      - ./MySql/Data:/var/lib/mysql
-      - ./MySql/Config/my.cnf:/etc/my.cnf
-      - ./MySql/Init:/docker-entrypoint-initdb.d/
 
   web:
     container_name: shop.web
     build: 
       context: .
       dockerfile: ./MyShop/Dockerfile
-    depends_on:
-      - db
-    links:
-      - db
 
   backend:
     container_name: shop.backend
     build:
       context: .
       dockerfile: ./Backend/Dockerfile
-    depends_on:
-      - db
-    links:
-      - db
 
   sss:
     container_name: shop.sss
