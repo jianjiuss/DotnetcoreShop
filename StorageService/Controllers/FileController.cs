@@ -12,7 +12,7 @@ namespace StorageService.Controllers
 {
     public class FileController : Controller
     {
-        private string[] imageUseTypes = { "ProductIcon" , "ProductInfo", "ProductTitle", "UserHeadPhoto" };
+        private string[] imageUseTypes = { "productIcon" , "productInfo", "productTitle", "userHeadPhoto" };
         private string token = "ea79d8a0-c031-40a3-b439-eed6518520d9";
 
         [HttpPost]
@@ -38,7 +38,7 @@ namespace StorageService.Controllers
                 return BadRequest("请指定好该图片用途");
             }
 
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", imageUseType);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", imageUseType);
             string fileName = Guid.NewGuid().ToString() + file.FileName.Substring(file.FileName.IndexOf('.'));
 
             string fullPath = Path.Combine(filePath, fileName);
@@ -50,7 +50,7 @@ namespace StorageService.Controllers
                     await file.CopyToAsync(stream);
                 }
             }
-            return Ok(new { path = "/Images/" + imageUseType + "/" + fileName });
+            return Ok(new { path = "/images/" + imageUseType + "/" + fileName });
         }
 
         [HttpGet]
@@ -74,9 +74,9 @@ namespace StorageService.Controllers
 
             List<string> usefulFilename = filenames.Split(';').ToList();
 
-            var IconImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "ProductIcon");
-            var InfoImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "ProductInfo");
-            var TitleImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "ProductTitle");
+            var IconImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "productIcon");
+            var InfoImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "productInfo");
+            var TitleImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "productTitle");
             DeleteFileInPath(usefulFilename, IconImagePath);
             DeleteFileInPath(usefulFilename, InfoImagePath);
             DeleteFileInPath(usefulFilename, TitleImagePath);
@@ -84,7 +84,7 @@ namespace StorageService.Controllers
             return Ok();
         }
 
-        private static void DeleteFileInPath(List<string> usefulFilename, string imagePath)
+        private void DeleteFileInPath(List<string> usefulFilename, string imagePath)
         {
             var localFilenamePath = Directory.GetFiles(imagePath);
             var localFilename = new List<string>();
@@ -99,28 +99,6 @@ namespace StorageService.Controllers
                 var filePath = Path.Combine(imagePath, name);
                 System.IO.File.Delete(filePath);
             }
-        }
-
-        [HttpPost]
-        public string Test1(string name)
-        {
-            return "Test1";
-        }
-
-        [HttpPost]
-        public IActionResult Test2(string name)
-        {
-            if (string.IsNullOrEmpty(HttpContext.Request.Headers["token"]))
-            {
-                return Unauthorized();
-            }
-
-            if (!HttpContext.Request.Headers["token"].Equals(token))
-            {
-                return Unauthorized();
-            }
-
-            return Ok("Test2");
         }
     }
 }
