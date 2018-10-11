@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Hello MUI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" type="text/css" href="css/icons-extra.css" />
+    <!--App自定义的css-->
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <!--底部选项卡的css-->
+    <style>
+        .title {
+            margin: 20px 15px 10px;
+            color: #6d6d72;
+            font-size: 15px;
+        }
+
+        .oa-contact-cell.mui-table .mui-table-cell {
+            padding: 11px 0;
+            vertical-align: middle;
+        }
+
+        .oa-contact-cell {
+            position: relative;
+            margin: -11px 0;
+        }
+
+        .oa-contact-avatar {
+            width: 75px;
+        }
+
+            .oa-contact-avatar img {
+                border-radius: 50%;
+            }
+
+        .oa-contact-content {
+            width: 100%;
+        }
+
+        .oa-contact-name {
+            margin-right: 20px;
+        }
+
+        .oa-contact-name, oa-contact-position {
+            float: left;
+        }
+    </style>
+    <!--左侧选项卡的css-->
+    <style>
+        .mui-row.mui-fullscreen > [class*="mui-col-"] {
+            height: 100%;
+        }
+
+        .mui-col-xs-3,
+        .mui-control-content {
+            overflow-y: scroll;
+            height: 100%;
+        }
+
+        .mui-segmented-control .mui-control-item {
+            line-height: 50px;
+            width: 100%;
+        }
+
+        .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mui-bar mui-bar-nav">
+        <div class="mui-input-row mui-search">
+            <input type="search" class="mui-input-clear" placeholder="请输入商品名称">
+        </div>
+    </div>
+
+    <nav class="mui-bar mui-bar-tab">
+        <div>
+            <a class="mui-tab-item mui-active" href="#">
+                <span class="mui-icon-extra mui-icon-extra-class"></span>
+                <span class="mui-tab-label">分类</span>
+            </a>
+            <a class="mui-tab-item" href="/shopcart.html">
+                <span class="mui-icon-extra mui-icon-extra-cart"></span>
+                <span class="mui-tab-label">购物车</span>
+            </a>
+            <a class="mui-tab-item" href="/user-setting.html">
+                <span class="mui-icon mui-icon-contact"></span>
+                <span class="mui-tab-label">个人中心</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="mui-content mui-row mui-fullscreen" id="categories">
+        <div class="mui-col-xs-3">
+            <div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+                <a class="mui-control-item" href="#" v-for="item in topCategories" v-on:click="getChilds(item.id)" v-text="item.name"></a>
+            </div>
+        </div>
+        <div id="segmentedControlContents" class="mui-col-xs-9" style="border-left: 1px solid #c8c7cc;">
+
+            <div class="mui-control-content mui-active">
+                <ul class="mui-table-view">
+                    <li class="mui-table-view-cell" v-for="item in childCategories" :key="item.id" v-text="item.name" v-on:click="toShopList(item.id)">
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</body>
+    <!--js-->
+    <script src="js/mui.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/vue-resource_1.5.1_vue-resource.min.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+        appendWindowOnload(function () {
+            var vm = new Vue({
+                el: '#categories',
+                data: {
+                    topCategories: [
+                    ],
+                    childCategories: [
+                    ]
+                },
+                methods: {
+                    getChilds: function (id) {
+                        if (id == -1) {
+                            window.location.href = "/shoplist.html";
+                        }
+                        else {
+                            this.$http.get('/api/categories/childs/' + id).then(function (res) {
+                                this.childCategories = res.body;
+                            }, function () {
+                                console.log('请求失败处理');
+                            });
+                        }
+                    },
+                    toShopList: function (id) {
+                        window.location.href = "/shoplist.html?id=" + id;
+                    },
+                    toSetting: function () {
+                        window.location.href = "/user-setting.html";
+                    }
+                },
+                created: function () {
+                    mui('.mui-bar-tab').on('tap', 'a', function () {
+                        console.log(this.getAttribute('href'));
+                        location.href = this.getAttribute('href');
+                    });
+                }
+            });
+
+            Vue.http.get('/api/categories/childs').then(function (res) {
+                res.body.splice(0, 0, { id: -1, name: "全部" });
+                vm.topCategories = res.body;
+            }, function (res) {
+                console.log('请求失败');
+            });
+        });
+    </script>
+
+
+</html>

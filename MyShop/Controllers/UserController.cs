@@ -20,8 +20,8 @@ namespace MyShop.Controllers
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private const string maleHeadphotoUrl = "/images/userHeadphoto/male_headphoto.png";
-        private const string femaleHeadphotoUrl = "/images/userHeadphoto/female_headphoto.png";
+        private const string maleHeadphotoUrl = "/images/userHeadPhoto/male_headphoto.png";
+        private const string femaleHeadphotoUrl = "/images/userHeadPhoto/female_headphoto.png";
 
         public UserController(
             UserManager<ApplicationUser> userManager,
