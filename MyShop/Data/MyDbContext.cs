@@ -30,6 +30,8 @@ namespace MyShop.Data
             modelBuilder.Entity<ShopCartItem>().ToTable("ShopCart_Item");
             modelBuilder.Entity<UserProductCollection>().ToTable("User_ProductCollection");
             modelBuilder.Entity<UserAddress>().ToTable("User_Address");
+            modelBuilder.Entity<Order>().ToTable("Order");
+            modelBuilder.Entity<OrderItem>().ToTable("OrderItem");
 
             modelBuilder.Entity<ProductTitleImage>().HasKey(p => new { p.ImageId, p.ProductId });
 
@@ -88,5 +90,7 @@ namespace MyShop.Data
 
         public DbSet<UserAddress> UserAddresses { get; set; }
 
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
     }
 }

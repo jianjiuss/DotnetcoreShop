@@ -13,6 +13,13 @@ namespace MyShop.Controllers
     public class WxController : ControllerBase
     {
         [HttpGet]
+        public IActionResult PaySuccessCallback()
+        {
+
+            return Ok();
+        }
+
+        [HttpGet]
         public ActionResult<string> WeChatCheck(string signature, string timestamp, string nonce, string echostr)
         {
             string token = "******";
