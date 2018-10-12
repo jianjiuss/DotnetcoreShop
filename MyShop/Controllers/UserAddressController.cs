@@ -28,6 +28,22 @@ namespace MyShop.Controllers
             _dbContext = dbContext;
         }
 
+        [HttpGet("default")]
+        public async Task<IActionResult> GetDefaultAsync()
+        {
+            var user = await GetUserAndLoadAddressAsync();
+
+            var defaultAddress = await _dbContext.UserAddresses
+                .FirstOrDefaultAsync(a => a.IsDefault && a.User == user);
+
+            if(defaultAddress == null)
+            {
+                return BadRequest("没有设置默认收货地址");
+            }
+
+            return Ok(defaultAddress);
+        }
+
         [HttpGet("{id?}")]
         public async Task<IActionResult> GetAsync(int? id)
         {
