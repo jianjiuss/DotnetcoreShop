@@ -50,3 +50,8 @@ C:\Users\hbox029\Source\Repos\MyShop\Backend\bin\Debug\netcoreapp2.1\Models.pdb
 C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages\Users\Index.g.cshtml.cs
 C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages\PermissionDenied.g.cshtml.cs
 C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages\Products\Preview.g.cshtml.cs
+C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages\Orders\Create.g.cshtml.cs
+C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages\Orders\Delete.g.cshtml.cs
+C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages\Orders\Details.g.cshtml.cs
+C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages\Orders\Edit.g.cshtml.cs
+C:\Users\hbox029\Source\Repos\MyShop\Backend\obj\Debug\netcoreapp2.1\Razor\Pages\Orders\Index.g.cshtml.cs

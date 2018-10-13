@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Backend.Data
 {
@@ -29,6 +30,8 @@ namespace Backend.Data
             modelBuilder.Entity<ShopCartItem>().ToTable("ShopCart_Item");
             modelBuilder.Entity<UserProductCollection>().ToTable("User_ProductCollection");
             modelBuilder.Entity<UserAddress>().ToTable("User_Address");
+            modelBuilder.Entity<Order>().ToTable("Order");
+            modelBuilder.Entity<OrderItem>().ToTable("OrderItem");
 
             modelBuilder.Entity<ProductTitleImage>().HasKey(p => new { p.ImageId, p.ProductId });
 
@@ -86,5 +89,8 @@ namespace Backend.Data
         public DbSet<UserProductCollection> UserProductCollections { get; set; }
 
         public DbSet<UserAddress> UserAddresses { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
     }
 }

@@ -27,6 +27,16 @@ namespace MyShop.Controllers
             return await _context.Products.ToListAsync();
         }
 
+        [HttpGet("name")]
+        public async Task<IActionResult> SearchByKeyword([FromQuery]string keyword)
+        {
+            var list = await _context.Products
+                .Where(p => p.Name.Contains(keyword))
+                .ToListAsync();
+
+            return Ok(list);
+        }
+
         [HttpGet("category/{categoryId}")]
         public async Task<ActionResult> GetByCategoryAsync(int categoryId)
         {
