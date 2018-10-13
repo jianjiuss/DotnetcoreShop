@@ -30,13 +30,32 @@ namespace Backend.Pages.Orders
 
             Order = await _context.Orders
                 .Include(o => o.ShippingAddress)
-                .Include(o => o.User).FirstOrDefaultAsync(m => m.Id == id);
+                .Include(o => o.User)
+                .Include(o => o.OrderItems)
+                .ThenInclude(i => i.Product)
+                .ThenInclude(i => i.Category)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (Order == null)
             {
                 return NotFound();
             }
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(int id)
+        {
+            Order = await _context.Orders
+                .FirstOrDefaultAsync(o => o.Id == id);
+
+            if(Order == null)
+            {
+                return NotFound();
+            }
+
+            Order.Status = OrderStatus.Deliver;
+            await _context.SaveChangesAsync();
+            return RedirectToPage("./Index");
         }
     }
 }

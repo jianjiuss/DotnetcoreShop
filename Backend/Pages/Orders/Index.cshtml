@@ -2,53 +2,72 @@
 @model Backend.Pages.Orders.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "列表";
 }
 
-<h2>Index</h2>
+<h2>列表</h2>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Order[0].Remark)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order[0].User)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order[0].Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order[0].ShippingAddress)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Order) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Remark)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShippingAddress.AddressArea)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Order[0].Id)
+                </th>
+                <th>
+                    用户
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Order[0].Status)
+                </th>
+                <th>
+                    配送地址（简）
+                </th>
+                <th>
+                    收货人
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Order)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.UserName)
+                    </td>
+                    <td style="color:red">
+                        @Html.DisplayFor(modelItem => item.StatusCn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShippingAddress.AddressArea)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShippingAddress.Name)
+                    </td>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.Id">详情</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@{
+    var prevDisabled = !Model.Order.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Order.HasNextPage ? "disabled" : "";
 }
-    </tbody>
-</table>
+
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.Order.PageIndex - 1)"
+   class="btn btn-default @prevDisabled">
+    上一页
+</a>
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.Order.PageIndex + 1)"
+   class="btn btn-default @nextDisabled">
+    下一页
+</a>

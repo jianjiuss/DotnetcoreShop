@@ -90,14 +90,28 @@ namespace MyShop.Controllers
         [HttpPost]
         public async Task<IActionResult> LoginAsync([FromBody] UserLoginJson loginInfo)
         {
+            if(string.IsNullOrEmpty(loginInfo.Name))
+            {
+                return BadRequest("用户名不能为空");
+            }
+
+            if(string.IsNullOrEmpty(loginInfo.Password))
+            {
+                return BadRequest("密码不能为空");
+            }
+
             //认证登录用户角色是否客人
             var user = await _userManager.FindByNameAsync(loginInfo.Name);
+            if(user == null)
+            {
+                return BadRequest("用户名或密码错误！");
+            }
             if(!(await _userManager.GetClaimsAsync(user)).Any(c => c.Type == ClaimTypes.Role && c.Value == "customer"))
             {
                 return BadRequest("用户名或密码错误！");
             }
 
-            var result = await _signInManager.PasswordSignInAsync(loginInfo.Name, loginInfo.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(loginInfo.Name, loginInfo.Password, loginInfo.IsPersistent, false);
             
             if(!result.Succeeded)
             {

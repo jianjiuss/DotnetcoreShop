@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Backend.Data;
 using Models;
+using Backend.Models;
 
 namespace Backend.Pages.Orders
 {
@@ -19,13 +20,14 @@ namespace Backend.Pages.Orders
             _context = context;
         }
 
-        public IList<Order> Order { get;set; }
+        public PaginatedList<Order> Order { get;set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int? pageIndex)
         {
-            Order = await _context.Orders
+            Order = await PaginatedList<Order>
+                .CreateAsync(_context.Orders
                 .Include(o => o.ShippingAddress)
-                .Include(o => o.User).ToListAsync();
+                .Include(o => o.User), pageIndex.HasValue ? pageIndex.Value : 1);
         }
     }
 }

@@ -1,0 +1,66 @@
+﻿@page
+@model Backend.Pages.Users.DetailsModel
+@{
+    ViewData["Title"] = "详情";
+}
+
+<h2>详情</h2>
+
+<div>
+    <h4>用户</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            用户Id
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppUser.User.Id)
+        </dd>
+        <dt>
+            用户名
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppUser.User.UserName)
+        </dd>
+        <dt>
+            联系电话
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppUser.User.PhoneNumber)
+        </dd>
+        <dt>
+            邮箱
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppUser.User.Email)
+        </dd>
+        <dt>
+            性别
+        </dt>
+        <dd>
+            @{ 
+                var gender = string.Empty;
+                if (!string.IsNullOrEmpty(Model.AppUser.Gender))
+                {
+                    gender = Model.AppUser.Gender.Equals("female") ? "女" : "男";
+                }
+            }
+            @gender
+        </dd>
+        <dt>
+            年龄
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppUser.Age)
+        </dd>
+        <dt>
+            地区
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppUser.Area)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Index">返回列表</a>
+</div>

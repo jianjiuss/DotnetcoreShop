@@ -2,42 +2,126 @@
 @model Backend.Pages.Orders.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "详情";
 }
 
-<h2>Details</h2>
+<h2>详情</h2>
 
 <div>
-    <h4>Order</h4>
+    <h4>订单</h4>
     <hr />
     <dl class="dl-horizontal">
+        <h5>订单信息</h5>
+        <dt>
+            @Html.DisplayNameFor(model => model.Order.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Order.Id)
+        </dd>
+        <dt>
+            用户
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Order.User.UserName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Order.Status)
+        </dt>
+        <dd style="color:red;">
+            @Html.DisplayFor(model => model.Order.StatusCn)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Order.Remark)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Order.Remark)
         </dd>
+        <hr />
+        <h5>配送地址</h5>
         <dt>
-            @Html.DisplayNameFor(model => model.Order.User)
+            收货人
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Order.User.Id)
+            @Html.DisplayFor(model => model.Order.ShippingAddress.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Order.Status)
+            手机号码
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Order.Status)
+            @Html.DisplayFor(model => model.Order.ShippingAddress.Phone)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Order.ShippingAddress)
+            地区
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Order.ShippingAddress.AddressArea)
         </dd>
+        <dt>
+            详细地址
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Order.ShippingAddress.AddressDetail)
+        </dd>
+        <hr />
+        <h5>商品项</h5>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Order.OrderItems.First().Product.IconImageUrl)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Order.OrderItems.First().Product.Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Order.OrderItems.First().Product.Price)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Order.OrderItems.First().Product.Store)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Order.OrderItems.First().Product.Category)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Order.OrderItems)
+                    {
+                    <tr>
+                        <td>
+                            @{ var iconImageUrl = Util.GlobalVariable.ImageServer + item.Product.IconImageUrl;}
+                            <img id="iconPreview" src="@iconImageUrl" class="img-thumbnail" style="width: 42px; height: 42px;">
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.Store)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.Category.Name)
+                        </td>
+                    </tr>
+                                }
+                </tbody>
+            </table>
+        </div>
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Order.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    @{
+        var deliver = Model.Order.StatusCn.Equals("已支付") ? "" : "disabled";
+    }
+    <div class="form-group">
+        <form method="post">
+            <input type="hidden" value="@Model.Order.Id" />
+            <input type="submit" value="发货" class="btn btn-default" @deliver />
+        </form>
+    </div>
+    <a asp-page="./Index">返回列表</a>
 </div>
