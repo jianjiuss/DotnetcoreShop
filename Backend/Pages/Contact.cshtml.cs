@@ -12,7 +12,7 @@ namespace Backend.Pages
 
         public void OnGet()
         {
-            Message = "Your contact page.";
+            Message = "联系信息";
         }
     }
 }

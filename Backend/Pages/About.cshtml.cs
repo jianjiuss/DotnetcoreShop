@@ -12,7 +12,7 @@ namespace Backend.Pages
 
         public void OnGet()
         {
-            Message = "Your application description page.";
+            Message = "项目";
         }
     }
 }

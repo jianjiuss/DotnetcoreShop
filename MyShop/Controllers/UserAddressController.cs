@@ -33,8 +33,8 @@ namespace MyShop.Controllers
         {
             var user = await GetUserAndLoadAddressAsync();
 
-            var defaultAddress = await _dbContext.UserAddresses
-                .FirstOrDefaultAsync(a => a.IsDefault && a.User == user);
+            var defaultAddress = user.UserAddresses
+                .FirstOrDefault(a => a.IsDefault && a.User == user);
 
             if(defaultAddress == null)
             {
@@ -134,8 +134,8 @@ namespace MyShop.Controllers
             {
                 return NotFound("没有该用户地址信息");
             }
-
-            _dbContext.UserAddresses.Remove(address);
+            
+            address.IsDeleted = true;
             await _dbContext.SaveChangesAsync();
 
             return Ok();
@@ -147,6 +147,7 @@ namespace MyShop.Controllers
             await _dbContext.Entry<ApplicationUser>(user)
                 .Collection(u => u.UserAddresses)
                 .LoadAsync();
+            user.UserAddresses = user.UserAddresses.Where(u => !u.IsDeleted).ToList();
             return user;
         }
     }

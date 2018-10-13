@@ -32,5 +32,7 @@ namespace Models
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }
 
+        public bool IsDeleted { get; set; }
+
     }
 }

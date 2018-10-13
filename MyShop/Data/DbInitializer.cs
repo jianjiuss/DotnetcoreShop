@@ -29,12 +29,14 @@ namespace MyShop.Data
                 new Category() { Name = "清洁用品" },
                 new Category() { Name = "文具" },
                 new Category() { Name = "洗发护发" },
+                new Category() {Name = "未分类"},
                 new Category() {Name = "未分类"}
             };
 
             categories[0].ChildCategorys = categories.GetRange(1, 4);
             categories[5].ChildCategorys = categories.GetRange(6, 2);
             categories[8].ChildCategorys = categories.GetRange(9, 3);
+            categories[12].ChildCategorys = new List<Category>() { categories[13] };
             context.Categories.AddRange(categories);
             context.SaveChanges();
 

@@ -87,7 +87,7 @@ namespace Backend.Pages.Categories
             var products = await _context.Products.Where(p => p.CategoryId == category.Id).ToListAsync();
             foreach(var product in products)
             {
-                product.CategoryId = _context.Categories.First(c => c.Name.Equals("未分类")).Id;
+                product.CategoryId = _context.Categories.First(c => c.Name.Equals("未分类") && c.ParentId.HasValue).Id;
             }
         }
     }

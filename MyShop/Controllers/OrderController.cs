@@ -28,6 +28,11 @@ namespace MyShop.Controllers
         [HttpPut]
         public async Task<IActionResult> CreateOrderAsync([FromBody]CreateOrderJson createOrderJson)
         {
+            if(!createOrderJson.ShippingAddressId.HasValue)
+            {
+                return BadRequest("请设置收货地址");
+            }
+
             var myShopCart = await _dbcontext.ShopCarts
                 .Include(s => s.ShopCartItems)
                 .FirstOrDefaultAsync(s => s.Id == createOrderJson.ShopCart.Id);
@@ -40,7 +45,7 @@ namespace MyShop.Controllers
             newOrder.UserId = shopCart.UserId;
             newOrder.Remark = createOrderJson.Remark;
             newOrder.OrderItems = new List<OrderItem>();
-            newOrder.ShippingAddressId = createOrderJson.ShippingAddressId;
+            newOrder.ShippingAddressId = createOrderJson.ShippingAddressId.Value;
             foreach(var item in shopCart.ShopCartItems)
             {
                 OrderItem orderItem = new OrderItem();
@@ -157,7 +162,7 @@ namespace MyShop.Controllers
         public class CreateOrderJson
         {
             public ShopCart ShopCart { get; set; }
-            public int ShippingAddressId { get; set; }
+            public int? ShippingAddressId { get; set; }
 
             public string Remark { get; set; }
         }
