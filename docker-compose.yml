@@ -17,7 +17,7 @@ services:
     container_name: shop.sss
     build: ./StorageService
     volumes:
-      - ./proxy.conf:/app
+      - ./images:/app/storage_service/wwwroot/images
   
   reverse-proxy:
     container_name: shop.proxy
@@ -27,4 +27,4 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./images:/app/storage_service/wwwroot/images
+      - ./proxy.conf:/etc/nginx/conf.d/default.conf
