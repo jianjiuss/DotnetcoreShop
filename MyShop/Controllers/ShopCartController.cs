@@ -10,12 +10,15 @@ using Models;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Security.Claims;
+using System.Net;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 namespace MyShop.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "customer")]
+    //[Authorize(Roles = "customer")]
     public class ShopCartController : ControllerBase
     {
         private readonly MyDbContext _context;
@@ -30,6 +33,13 @@ namespace MyShop.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
+            if(!User.Identity.IsAuthenticated)
+            {
+                ShopCart tempShopCart = GetShopCartInCookies();
+                HttpContext.Response.Cookies.Append("shopcart", JsonConvert.SerializeObject(tempShopCart), new CookieOptions() { MaxAge = TimeSpan.FromDays(7) });
+                return Ok(tempShopCart);
+            }
+
             var shopCart = await GetShopCartAsync();
 
             if(shopCart == null)
@@ -50,16 +60,25 @@ namespace MyShop.Controllers
                 return BadRequest("请确定商品商量");
             }
 
-            var shopCart = await GetShopCartAsync();
-
-            if(shopCart == null)
+            ShopCart shopCart;
+            if(User.Identity.IsAuthenticated)
             {
-                shopCart = new ShopCart();
-                shopCart.ShopCartItems = new HashSet<ShopCartItem>();
+                shopCart = await GetShopCartAsync();
+
+                if (shopCart == null)
+                {
+                    shopCart = new ShopCart();
+                    shopCart.ShopCartItems = new HashSet<ShopCartItem>();
+                }
             }
+            else
+            {
+                shopCart = GetShopCartInCookies();
+            }
+                
 
             var shopCartItem = shopCart.ShopCartItems
-                .FirstOrDefault(i => i.ProductId == addProductJson.ProductId);
+                .FirstOrDefault(i => i.Product.Id == addProductJson.ProductId);
 
             if (shopCartItem == null)
             {
@@ -85,28 +104,52 @@ namespace MyShop.Controllers
                 }
             }
 
-            _context.SaveChanges();
+            if (User.Identity.IsAuthenticated)
+            {
+                _context.SaveChanges();
+            }
+            else
+            {
+                HttpContext.Response.Cookies.Append("shopcart", JsonConvert.SerializeObject(shopCart), new CookieOptions() { MaxAge = TimeSpan.FromDays(7) });
+            }
             return Ok();
         }
 
-        [HttpDelete("{cartItemId}")]
-        public async Task<IActionResult> RemoveCartItemAsync(int cartItemId)
+        [HttpDelete("{productId}")]
+        public async Task<IActionResult> RemoveCartItemAsync(int productId)
         {
-            var shopCart = await GetShopCartAsync();
-
-            if (shopCart == null)
+            ShopCart shopCart;
+            if (User.Identity.IsAuthenticated)
             {
-                return NotFound();
+                shopCart = await GetShopCartAsync();
+
+                if (shopCart == null)
+                {
+                    shopCart = new ShopCart();
+                    shopCart.ShopCartItems = new HashSet<ShopCartItem>();
+                }
+            }
+            else
+            {
+                shopCart = GetShopCartInCookies();
             }
 
-            var item = shopCart.ShopCartItems.FirstOrDefault(i => i.Id == cartItemId);
+            var item = shopCart.ShopCartItems.FirstOrDefault(i => i.Product.Id == productId);
             if (item == null)
             {
                 return NotFound();
             }
 
             shopCart.ShopCartItems.Remove(item);
-            await _context.SaveChangesAsync();
+
+            if (User.Identity.IsAuthenticated)
+            {
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                HttpContext.Response.Cookies.Append("shopcart", JsonConvert.SerializeObject(shopCart), new CookieOptions() { MaxAge = TimeSpan.FromDays(7) });
+            }
 
             return Ok();
         }
@@ -114,14 +157,23 @@ namespace MyShop.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateCartItemAsync([FromBody] UpdateItemJson updateItemJson)
         {
-            var shopCart = await GetShopCartAsync();
-            
-            if(shopCart == null)
+            ShopCart shopCart;
+            if (User.Identity.IsAuthenticated)
             {
-                return NotFound();
+                shopCart = await GetShopCartAsync();
+
+                if (shopCart == null)
+                {
+                    shopCart = new ShopCart();
+                    shopCart.ShopCartItems = new HashSet<ShopCartItem>();
+                }
+            }
+            else
+            {
+                shopCart = GetShopCartInCookies();
             }
 
-            var item = shopCart.ShopCartItems.FirstOrDefault(i => i.Id == updateItemJson.CartItemId);
+            var item = shopCart.ShopCartItems.FirstOrDefault(i => i.Product.Id == updateItemJson.ProductId);
             if(item == null)
             {
                 return NotFound();
@@ -137,8 +189,31 @@ namespace MyShop.Controllers
             {
                 return BadRequest("库存不足");
             }
-            await _context.SaveChangesAsync();
+
+            if (User.Identity.IsAuthenticated)
+            {
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                HttpContext.Response.Cookies.Append("shopcart", JsonConvert.SerializeObject(shopCart), new CookieOptions() { MaxAge = TimeSpan.FromDays(7) });
+            }
             return Ok();
+        }
+
+        private ShopCart GetShopCartInCookies()
+        {
+            if(HttpContext.Request.Cookies.Any(c => c.Key.Equals("shopcart")))
+            {
+                var shopcartCookie = HttpContext.Request.Cookies.First(c => c.Key.Equals("shopcart"));
+                return JsonConvert.DeserializeObject<ShopCart>(shopcartCookie.Value);
+            }
+            else
+            {
+                ShopCart shopcart = new ShopCart();
+                shopcart.ShopCartItems = new List<ShopCartItem>();
+                return shopcart;
+            }
         }
 
         private async Task<ShopCart> GetShopCartAsync()
@@ -159,7 +234,7 @@ namespace MyShop.Controllers
 
         public class UpdateItemJson
         {
-            public int CartItemId { get; set; }
+            public int ProductId { get; set; }
             public int Numb { get; set; }
             public bool IsCheck { get; set; }
         }

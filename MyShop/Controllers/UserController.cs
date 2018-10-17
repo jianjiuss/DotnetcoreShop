@@ -2,8 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Models;
+using MyShop.Data;
 using MyShop.Util;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,15 +23,18 @@ namespace MyShop.Controllers
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly MyDbContext _dbcontext;
         private const string maleHeadphotoUrl = "/images/userHeadPhoto/male_headphoto.png";
         private const string femaleHeadphotoUrl = "/images/userHeadPhoto/female_headphoto.png";
 
         public UserController(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            MyDbContext dbcontext)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _dbcontext = dbcontext;
         }
 
         [HttpGet]
@@ -116,6 +122,54 @@ namespace MyShop.Controllers
             if(!result.Succeeded)
             {
                 return BadRequest("用户名或密码错误！");
+            }
+
+            //合拼购物车项目
+            if(HttpContext.Request.Cookies.Any(c => c.Key.Equals("shopcart")))
+            {
+                var tempShopcart = JsonConvert.DeserializeObject<ShopCart>(HttpContext.Request.Cookies.First(c => c.Key.Equals("shopcart")).Value);
+                var shopcart = _dbcontext.ShopCarts
+                    .Include(s => s.ShopCartItems)
+                    .ThenInclude(i => i.Product)
+                    .FirstOrDefault(s => s.UserId == user.Id);
+                if(shopcart == null)
+                {
+                    var newShopcart = new ShopCart();
+                    newShopcart.UserId = user.Id;
+                    newShopcart.ShopCartItems = new List<ShopCartItem>();
+                    foreach(var item in tempShopcart.ShopCartItems)
+                    {
+                        item.ProductId = item.Product.Id;
+                        item.Product = null;
+                        newShopcart.ShopCartItems.Add(item);
+                    }
+                    await _dbcontext.ShopCarts.AddAsync(newShopcart);
+                }
+                else
+                {
+                    foreach (var item in tempShopcart.ShopCartItems)
+                    {
+                        var shopcartItem = shopcart.ShopCartItems.FirstOrDefault(i => i.ProductId == item.Product.Id);
+                        if(shopcartItem == null)
+                        {
+                            item.ProductId = item.Product.Id;
+                            item.Product = null;
+                            shopcart.ShopCartItems.Add(item);
+                        }
+                        else
+                        {
+                            shopcartItem.Count += item.Count;
+                            if(shopcartItem.Product.Store < shopcartItem.Count)
+                            {
+                                shopcartItem.Count = shopcartItem.Product.Store;
+                            }
+                        }
+                    }
+                }
+
+                HttpContext.Response.Cookies.Delete("shopcart");
+
+                await _dbcontext.SaveChangesAsync();
             }
 
             return Ok();
