@@ -33,20 +33,11 @@ namespace MyShop.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
-            if(!User.Identity.IsAuthenticated)
-            {
-                ShopCart tempShopCart = GetShopCartInCookies();
-                HttpContext.Response.Cookies.Append("shopcart", JsonConvert.SerializeObject(tempShopCart), new CookieOptions() { MaxAge = TimeSpan.FromDays(7) });
-                return Ok(tempShopCart);
-            }
+            ShopCart shopCart = await GetShopCartAsync();
 
-            var shopCart = await GetShopCartAsync();
-
-            if(shopCart == null)
+            if (!User.Identity.IsAuthenticated)
             {
-                shopCart = new ShopCart() { User = await _userManager.GetUserAsync(User) };
-                await _context.ShopCarts.AddAsync(shopCart);
-                await _context.SaveChangesAsync();
+                HttpContext.Response.Cookies.Append("shopcart", JsonConvert.SerializeObject(shopCart), new CookieOptions() { MaxAge = TimeSpan.FromDays(7) });
             }
 
             return Ok(shopCart);
@@ -60,22 +51,7 @@ namespace MyShop.Controllers
                 return BadRequest("请确定商品商量");
             }
 
-            ShopCart shopCart;
-            if(User.Identity.IsAuthenticated)
-            {
-                shopCart = await GetShopCartAsync();
-
-                if (shopCart == null)
-                {
-                    shopCart = new ShopCart();
-                    shopCart.ShopCartItems = new HashSet<ShopCartItem>();
-                }
-            }
-            else
-            {
-                shopCart = GetShopCartInCookies();
-            }
-                
+            ShopCart shopCart = await GetShopCartAsync();
 
             var shopCartItem = shopCart.ShopCartItems
                 .FirstOrDefault(i => i.Product.Id == addProductJson.ProductId);
@@ -118,21 +94,7 @@ namespace MyShop.Controllers
         [HttpDelete("{productId}")]
         public async Task<IActionResult> RemoveCartItemAsync(int productId)
         {
-            ShopCart shopCart;
-            if (User.Identity.IsAuthenticated)
-            {
-                shopCart = await GetShopCartAsync();
-
-                if (shopCart == null)
-                {
-                    shopCart = new ShopCart();
-                    shopCart.ShopCartItems = new HashSet<ShopCartItem>();
-                }
-            }
-            else
-            {
-                shopCart = GetShopCartInCookies();
-            }
+            ShopCart shopCart = await GetShopCartAsync();
 
             var item = shopCart.ShopCartItems.FirstOrDefault(i => i.Product.Id == productId);
             if (item == null)
@@ -157,21 +119,7 @@ namespace MyShop.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateCartItemAsync([FromBody] UpdateItemJson updateItemJson)
         {
-            ShopCart shopCart;
-            if (User.Identity.IsAuthenticated)
-            {
-                shopCart = await GetShopCartAsync();
-
-                if (shopCart == null)
-                {
-                    shopCart = new ShopCart();
-                    shopCart.ShopCartItems = new HashSet<ShopCartItem>();
-                }
-            }
-            else
-            {
-                shopCart = GetShopCartInCookies();
-            }
+            ShopCart shopCart = await GetShopCartAsync();
 
             var item = shopCart.ShopCartItems.FirstOrDefault(i => i.Product.Id == updateItemJson.ProductId);
             if(item == null)
@@ -201,6 +149,21 @@ namespace MyShop.Controllers
             return Ok();
         }
 
+        private async Task<ShopCart> GetShopCartAsync()
+        {
+            ShopCart shopCart;
+            if (!User.Identity.IsAuthenticated)
+            {
+                shopCart = GetShopCartInCookies();
+                return shopCart;
+            }
+            else
+            {
+                shopCart = await GetShopCartInDbAsync();
+                return shopCart;
+            }
+        }
+
         private ShopCart GetShopCartInCookies()
         {
             if(HttpContext.Request.Cookies.Any(c => c.Key.Equals("shopcart")))
@@ -216,13 +179,22 @@ namespace MyShop.Controllers
             }
         }
 
-        private async Task<ShopCart> GetShopCartAsync()
+        private async Task<ShopCart> GetShopCartInDbAsync()
         {
             var user = await _userManager.GetUserAsync(User);
             var shopCart = await _context.ShopCarts
                 .Include(s => s.ShopCartItems)
                 .ThenInclude(i => i.Product)
                 .FirstOrDefaultAsync(s => s.User == user);
+
+            if (shopCart == null)
+            {
+                shopCart = new ShopCart() { User = await _userManager.GetUserAsync(User) };
+                shopCart.ShopCartItems = new HashSet<ShopCartItem>();
+                await _context.ShopCarts.AddAsync(shopCart);
+                await _context.SaveChangesAsync();
+            }
+
             return shopCart;
         }
 

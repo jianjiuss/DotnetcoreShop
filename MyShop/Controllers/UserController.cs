@@ -226,8 +226,9 @@ namespace MyShop.Controllers
 
         public class UpdateInfoJson
         {
-            [Required]
+            [Required(ErrorMessage = "性别是必须的")]
             public string Gender { get; set; }
+            [Required(ErrorMessage = "年龄是必须的")]
             [Range(10, 99, ErrorMessage = "请输入正确的年龄")]
             public string Age { get; set; }
             [Required(ErrorMessage ="地区是必须的")]
