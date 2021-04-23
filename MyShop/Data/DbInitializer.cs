@@ -43,10 +43,13 @@ namespace MyShop.Data
             List<Image> images = new List<Image>()
             {
                 new Image(){ImageUrl = "/images/productTitle/cocacola_title.jpg"},
-                new Image(){ImageUrl = "/images/productInfo/testImageInfo.png"},
-                new Image(){ImageUrl = "/images/productInfo/testImageInfo.png"},
-                new Image(){ImageUrl = "/images/productInfo/testImageInfo.png"},
-                new Image(){ImageUrl = "/images/productInfo/testImageInfo.png"}
+                new Image(){ImageUrl = "/images/productInfo/cokecola_detail_1.jpg"},
+                new Image(){ImageUrl = "/images/productInfo/cokecola_detail_2.jpg"},
+                new Image(){ImageUrl = "/images/productInfo/cokecola_detail_3.jpg"},
+                new Image(){ImageUrl = "/images/productInfo/cokecola_detail_4.jpg"},
+                new Image(){ImageUrl = "/images/productInfo/cokecola_detail_5.jpg"},
+                new Image(){ImageUrl = "/images/productInfo/cokecola_detail_6.jpg"},
+
             };
             context.Images.AddRange(images);
             context.SaveChanges();
@@ -85,7 +88,9 @@ namespace MyShop.Data
                 new ProductInfoImage(){Product = products[0], Image = images[1]},
                 new ProductInfoImage(){Product = products[0], Image = images[2]},
                 new ProductInfoImage(){Product = products[0], Image = images[3]},
-                new ProductInfoImage(){Product = products[0], Image = images[4]}
+                new ProductInfoImage(){Product = products[0], Image = images[4]},
+                new ProductInfoImage(){Product = products[0], Image = images[5]},
+                new ProductInfoImage(){Product = products[0], Image = images[6]},
             };
 
             context.Products.AddRange(products);
